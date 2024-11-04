@@ -1,6 +1,6 @@
 ---
 name: Dobapmin issue template
-about: 도밥민 이슈 템플릿입니다. (종근)
+about: 도밥민 이슈 템플릿입니다.
 title: "[기능분류] 기능을 적습니다."
 labels: ''
 assignees: why-only-english
