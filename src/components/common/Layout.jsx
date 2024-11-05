@@ -10,7 +10,6 @@ export default function Layout() {
         style={{
           marginLeft: '100px',
           marginRight: '100px',
-          backgroundColor: 'pink',
         }}
       >
         <Outlet />
