@@ -1,9 +1,10 @@
-import LoginPage from "./pages/LoginPage";
+import { RouterProvider } from 'react-router-dom';
+import mainRouter from './routers/main-router';
 
 function App() {
   return (
     <>
-      <LoginPage />
+      <RouterProvider router={mainRouter} />
     </>
   );
 }
