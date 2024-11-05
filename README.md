@@ -4,11 +4,11 @@
 
 ### 1. 브랜치 규칙
 
-Feat/#이슈번호-기능요약
+feat/#이슈번호-기능요약
 
 ex) feat/#12-login
 
-### 2. Commit Message
+### 2. Commit Message 
 
 Feat(#이슈번호): 작업내용
 
@@ -25,4 +25,4 @@ ex) Feat(#12): 로그인 기능 추가
 
 ### 3. Pull Request
 
-main <- feat/#이슈번호-기능요약
+pr feat/#이슈번호-기능요약
