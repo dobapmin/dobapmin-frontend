@@ -4,15 +4,15 @@
 
 ### 1. 브랜치 규칙
 
-feat/#이슈번호-기능요약
+Feat/#이슈번호-기능요약
 
 ex) feat/#12-login
 
 ### 2. Commit Message
 
-feat(#이슈번호): 작업내용
+Feat(#이슈번호): 작업내용
 
-ex) feat(#12): 로그인 기능 추가
+ex) Feat(#12): 로그인 기능 추가
 
 - feat : 새로운 기능 추가
 - fix : 버그 수정, 기능 수정
