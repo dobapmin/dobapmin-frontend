@@ -1,0 +1,10 @@
+.board-list-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.board-card-wrapper {
+  display: flex;
+  gap: 20px;
+}
