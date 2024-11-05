@@ -1,0 +1,17 @@
+.post-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 67px;
+  height: 67px;
+  background-color: #002da7;
+  border-radius: 50%;
+  position: fixed;
+  bottom: 60px;
+  right: 60px;
+}
+
+.post-button-img {
+  width: 44px;
+  height: 44px;
+}
