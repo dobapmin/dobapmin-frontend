@@ -2,13 +2,15 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+* {
+  background-color: #f7f8fa;
+}
 @font-face {
   font-family: "Jalnan";
   src: url("./fonts/Jalnan2TTF.ttf");
