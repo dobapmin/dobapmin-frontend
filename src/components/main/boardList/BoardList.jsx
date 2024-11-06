@@ -19,13 +19,28 @@ export default function BoardList(props) {
       <BoardTitle title={props.title} />
       <div className="board-card-wrapper">
         <Swiper
-          slidesPerView={6}
+          slidesPerView={7}
           spaceBetween={20}
           freeMode={true}
           modules={[FreeMode, Pagination]}
           className="mySwiper"
           style={{ overflowX: 'auto' }}
         >
+          {props.data &&
+            props.data.map((item, idx) => {
+              return (
+                <SwiperSlide style={{ padding: '10px' }}>
+                  <BoardCard data={item} />
+                </SwiperSlide>
+              );
+            })}
+
+          {/* <SwiperSlide style={{ padding: '10px 0px' }}>
+            <BoardCard />
+          </SwiperSlide>
+          <SwiperSlide style={{ padding: '10px 0px' }}>
+            <BoardCard />
+          </SwiperSlide>
           <SwiperSlide style={{ padding: '10px' }}>
             <BoardCard />
           </SwiperSlide>
@@ -43,16 +58,7 @@ export default function BoardList(props) {
           </SwiperSlide>
           <SwiperSlide style={{ padding: '10px 0px' }}>
             <BoardCard />
-          </SwiperSlide>
-          <SwiperSlide style={{ padding: '10px' }}>
-            <BoardCard />
-          </SwiperSlide>
-          <SwiperSlide style={{ padding: '10px 0px' }}>
-            <BoardCard />
-          </SwiperSlide>
-          <SwiperSlide style={{ padding: '10px 0px' }}>
-            <BoardCard />
-          </SwiperSlide>
+          </SwiperSlide> */}
         </Swiper>
       </div>
     </div>

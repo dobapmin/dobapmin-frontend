@@ -108,3 +108,17 @@
   font-family: 'Jalnan';
   font-size: 16px;
 }
+
+.card-content-bottom-no-name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 14px;
+  border-radius: 4px;
+  background: #022da6;
+  color: #fff;
+  font-family: Jua;
+  font-size: 9px;
+  font-weight: 400;
+}
