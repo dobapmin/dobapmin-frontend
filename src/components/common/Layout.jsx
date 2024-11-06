@@ -7,12 +7,16 @@ export default function Layout() {
     <div>
       <Header />
       <div
-        style={{
-          marginLeft: '100px',
-          marginRight: '100px',
-        }}
+        style={{ backgroundColor: '#F7F8FA', height: '100vh', width: '100vw' }}
       >
-        <Outlet />
+        <div
+          style={{
+            marginLeft: '100px',
+            marginRight: '100px',
+          }}
+        >
+          <Outlet />
+        </div>
       </div>
     </div>
   );
