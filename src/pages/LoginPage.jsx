@@ -6,14 +6,16 @@ import { useLogin } from "../lib/hooks/useLogin";
 import { postLogin } from "../lib/apis/login";
 
 export default function LoginPage() {
-  const data = useLogin();
-  console.log(data);
+  const { loggedIn, setLoggedIn } = useLogin();
+
   const [name, setName] = useState("");
 
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    postLogin(name);
+    postLogin(name).then(() => {
+      setLoggedIn(name);
+    });
     navigate("/");
   };
 

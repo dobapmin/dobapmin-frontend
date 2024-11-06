@@ -2,8 +2,16 @@ import React from "react";
 import mainLogo from "../../assets/mainLogo.png";
 import userImg from "../../assets/userImg.png";
 import { postLogout } from "../../lib/apis/login";
+import { useLogin } from "../../lib/hooks/useLogin";
+import { useNavigate } from "react-router-dom";
 
 export default function Header() {
+  const { loggedIn, setLoggedIn } = useLogin();
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    postLogout().then(setLoggedIn(""));
+    navigate("/login");
+  };
   return (
     <div
       style={{
@@ -51,7 +59,7 @@ export default function Header() {
               border: "none",
             }}
           >
-            이유진
+            {loggedIn}
           </div>
         </div>
 
@@ -65,7 +73,7 @@ export default function Header() {
             borderRadius: "15px",
             border: "none",
           }}
-          onClick={postLogout}
+          onClick={handleLogout}
         >
           {" "}
           로그아웃

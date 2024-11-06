@@ -7,8 +7,8 @@ import { useLogin } from "../lib/hooks/useLogin";
 
 function ProtectedRoute({ element }) {
   const { loggedIn } = useLogin();
-  // return loggedIn ? element : <Navigate to="/login" replace />;
-  return loggedIn ? element : element;
+  // return loggedIn !=== "" ? element : <Navigate to="/login" replace />;
+  return loggedIn === "" ? element : element;
 }
 
 export const mainRoutes = [
