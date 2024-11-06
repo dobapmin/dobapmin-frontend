@@ -12,8 +12,8 @@ export default function Header() {
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
-        marginLeft: "100px",
-        marginRight: "100px",
+        paddingLeft: "100px",
+        paddingRight: "100px",
       }}
     >
       <img src={mainLogo} style={{ objectFit: "cover", height: "100%" }} />
@@ -23,6 +23,7 @@ export default function Header() {
           flexDirection: "row",
           alignItems: "center",
           gap: "30px",
+          backgroundColor: "white",
         }}
       >
         <div
