@@ -8,9 +8,6 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-* {
-  background-color: #f7f8fa;
-}
 @font-face {
   font-family: 'Jalnan';
   src: url('./fonts/Jalnan2TTF.ttf');
