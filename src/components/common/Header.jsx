@@ -1,7 +1,7 @@
 import React from "react";
 import mainLogo from "../../assets/mainLogo.png";
 import userImg from "../../assets/userImg.png";
-import { HandleLogout } from "../../lib/apis/login";
+import { postLogout } from "../../lib/apis/login";
 
 export default function Header() {
   return (
@@ -32,12 +32,23 @@ export default function Header() {
             flexDirection: "row",
             alignItems: "center",
             gap: "5px",
+            backgroundColor: "white",
           }}
         >
-          <img src={userImg} style={{ width: "25px", height: "25px" }} />
+          <img
+            src={userImg}
+            style={{
+              width: "25px",
+              height: "25px",
+              backgroundColor: "white",
+              border: "none",
+            }}
+          />
           <div
             style={{
               fontFamily: "Jalnan",
+              backgroundColor: "white",
+              border: "none",
             }}
           >
             이유진
@@ -54,7 +65,7 @@ export default function Header() {
             borderRadius: "15px",
             border: "none",
           }}
-          onClick={HandleLogout}
+          onClick={postLogout}
         >
           {" "}
           로그아웃
