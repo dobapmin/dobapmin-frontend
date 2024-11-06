@@ -21,7 +21,7 @@ function MainPage() {
     } else {
       setSelectedPost(post);
       setIsDetailModalOpen(true);
-      navigate(`/api/main/${post.id}`);
+      navigate(`/main/${post.id}`);
     }
   };
 
@@ -29,7 +29,7 @@ function MainPage() {
     setIsDetailModalOpen(false);
     setIsSnackModalOpen(false);
     setSelectedPost(null);
-    navigate("/api/main");
+    navigate("/main");
   };
 
   return (

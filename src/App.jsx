@@ -6,8 +6,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/api/main" element={<MainPage />} />
-        <Route path="/api/main/:id" element={<MainPage />} />
+        <Route path="/main" element={<MainPage />} />
+        <Route path="/main/:id" element={<MainPage />} />
       </Routes>
     </Router>
   );
