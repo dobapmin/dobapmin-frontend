@@ -1,14 +1,24 @@
 import React from "react";
 import SolImg from "../assets/solImg.png";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import { useLogin } from "../lib/hooks/useLogin";
+import { postLogin } from "../lib/apis/login";
 
 export default function LoginPage() {
+  const { loggedIn, setLoggedIn } = useLogin();
+
   const [name, setName] = useState("");
+
   const navigate = useNavigate();
+
   const handleLogin = () => {
+    postLogin(name).then(() => {
+      setLoggedIn(name);
+    });
     navigate("/");
   };
+
   return (
     <div
       style={{
@@ -19,7 +29,7 @@ export default function LoginPage() {
       }}
     >
       <div style={{ fontFamily: "Jalnan", fontSize: "48px" }}>도밥민</div>
-      <div style={{ fontFamily: "Jalnan", fontSize: "24px" }}>
+      <div style={{ fontFamily: "Jua", fontSize: "24px" }}>
         도파민 가득한 밥 시간
       </div>
       <img src={SolImg} style={{ width: "580px" }}></img>
@@ -37,7 +47,7 @@ export default function LoginPage() {
         }}
         placeholder:style={{ color: "#CACACA" }}
         placeholder="닉네임"
-        onClick={(e) => {
+        onChange={(e) => {
           setName(e.target.value);
         }}
       />
