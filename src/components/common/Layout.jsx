@@ -7,7 +7,7 @@ export default function Layout() {
     <div>
       <Header />
       <div
-        style={{ backgroundColor: '#F7F8FA', height: '100vh', width: '100vw' }}
+        style={{ backgroundColor: '#F7F8FA', height: '100%', width: '100vw' }}
       >
         <div
           style={{

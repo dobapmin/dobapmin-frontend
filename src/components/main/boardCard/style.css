@@ -91,3 +91,20 @@
   font-size: 8px;
   font-weight: 400;
 }
+
+/* 마감된 카드 */
+.card-end {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 180px;
+  height: 252px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.66);
+  z-index: 100;
+
+  color: #fff;
+  font-family: 'Jalnan';
+  font-size: 16px;
+}

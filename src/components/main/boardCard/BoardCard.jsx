@@ -1,10 +1,18 @@
 import './style.css';
 import FoodJapan from '../../../assets/food_category/japan.png';
 import UserImg from '../../../assets/userImg.png';
+import { useState } from 'react';
 
 export default function BoardCard() {
+  const [isEnd, setIsEnd] = useState(true);
   return (
     <div className="card-wrapper">
+      {isEnd ? (
+        <>
+          <div className="card-end">마감되었습니다.</div>
+        </>
+      ) : null}
+
       <div className="card-img-bg">
         <div className="card-food-category">일식</div>
         <img className="card-img" src={FoodJapan} />
