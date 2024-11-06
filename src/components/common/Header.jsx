@@ -1,9 +1,17 @@
 import React from "react";
 import mainLogo from "../../assets/mainLogo.png";
 import userImg from "../../assets/userImg.png";
-import { HandleLogout } from "../../lib/apis/login";
+import { postLogout } from "../../lib/apis/login";
+import { useLogin } from "../../lib/hooks/useLogin";
+import { useNavigate } from "react-router-dom";
 
 export default function Header() {
+  const { loggedIn, setLoggedIn } = useLogin();
+  const navigate = useNavigate();
+  const handleLogout = () => {
+    postLogout().then(setLoggedIn(""));
+    navigate("/login");
+  };
   return (
     <div
       style={{
@@ -12,8 +20,8 @@ export default function Header() {
         display: "flex",
         flexDirection: "row",
         justifyContent: "space-between",
-        marginLeft: "100px",
-        marginRight: "100px",
+        paddingLeft: "100px",
+        paddingRight: "100px",
       }}
     >
       <img src={mainLogo} style={{ objectFit: "cover", height: "100%" }} />
@@ -23,6 +31,7 @@ export default function Header() {
           flexDirection: "row",
           alignItems: "center",
           gap: "30px",
+          backgroundColor: "white",
         }}
       >
         <div
@@ -31,15 +40,26 @@ export default function Header() {
             flexDirection: "row",
             alignItems: "center",
             gap: "5px",
+            backgroundColor: "white",
           }}
         >
-          <img src={userImg} style={{ width: "25px", height: "25px" }} />
+          <img
+            src={userImg}
+            style={{
+              width: "25px",
+              height: "25px",
+              backgroundColor: "white",
+              border: "none",
+            }}
+          />
           <div
             style={{
               fontFamily: "Jalnan",
+              backgroundColor: "white",
+              border: "none",
             }}
           >
-            이유진
+            {loggedIn}
           </div>
         </div>
 
@@ -53,7 +73,7 @@ export default function Header() {
             borderRadius: "15px",
             border: "none",
           }}
-          onClick={HandleLogout}
+          onClick={handleLogout}
         >
           {" "}
           로그아웃
