@@ -12,6 +12,11 @@
   background-color: #f7f8fa;
 }
 @font-face {
-  font-family: "Jalnan";
-  src: url("./fonts/Jalnan2TTF.ttf");
+  font-family: 'Jalnan';
+  src: url('./fonts/Jalnan2TTF.ttf');
+}
+
+@font-face {
+  font-family: 'Jua';
+  src: url('./fonts/BMJUA_ttf.ttf');
 }
