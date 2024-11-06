@@ -1,0 +1,44 @@
+/* CSS 파일이나 스타일 태그 내에 추가 */
+.root {
+  max-width: 480px;
+    margin: 0 auto;
+}
+
+.mb-3 textarea::placeholder{
+  color: #CACACA; 
+  opacity: 1; 
+}
+
+.mb-3 input::placeholder{
+  color: #CACACA; 
+  opacity: 1; 
+}
+
+/* swiper css */
+.board-list-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  margin-bottom: 14px;
+}
+
+.board-card-wrapper {
+  display: flex;
+  gap: 20px;
+}
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mySwiper {
+  scrollbar-width: none;
+}
