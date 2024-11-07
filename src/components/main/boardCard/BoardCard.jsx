@@ -13,6 +13,7 @@ import UserImg from '../../../assets/userImg.png';
 import { useState } from 'react';
 
 export default function BoardCard({ data }) {
+  console.log(data);
   let CardImg = FoodETC;
   let CardColor = '#85BCFF';
   switch (data.category) {
@@ -98,7 +99,7 @@ export default function BoardCard({ data }) {
             </>
           )}
 
-          <div className="dm-card-content-bottom-date">2024.11.04</div>
+          <div className="dm-card-content-bottom-date">{data.createdAt}</div>
         </div>
       </div>
     </div>
