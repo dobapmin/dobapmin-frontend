@@ -19,12 +19,12 @@ export default function BoardList(props) {
       <BoardTitle title={props.title} />
       <div className="board-card-wrapper">
         <Swiper
-          slidesPerView={7}
+          slidesPerView={6.5}
           spaceBetween={20}
           freeMode={true}
           modules={[FreeMode, Pagination]}
           className="mySwiper"
-          style={{ overflowX: 'auto' }}
+          style={{ overflowX: 'auto', padding: '0px 10px' }}
         >
           {props.data &&
             props.data.map((item, idx) => {
