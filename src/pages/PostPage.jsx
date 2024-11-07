@@ -119,7 +119,7 @@ export default function PostPage() {
                               fontSize: '15px',
                             }}
                             isSelected={selectedFoodCategory === elem}
-                            onClick={() => setSelectedFoodCategory(elem)}
+                            onClick={() => handleFoodCategoryClick(elem)}
                           />
                         </SwiperSlide>
                       </>
