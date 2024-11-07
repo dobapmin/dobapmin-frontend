@@ -13,7 +13,6 @@ import UserImg from '../../../assets/userImg.png';
 import { useState } from 'react';
 
 export default function BoardCard({ data }) {
-  console.log(data);
   let CardImg = FoodETC;
   let CardColor = '#85BCFF';
   switch (data.category) {
