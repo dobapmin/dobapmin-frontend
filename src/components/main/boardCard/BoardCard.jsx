@@ -13,6 +13,7 @@ import UserImg from '../../../assets/userImg.png';
 import { useState } from 'react';
 
 export default function BoardCard({ data }) {
+  console.log(data);
   let CardImg = FoodETC;
   let CardColor = '#85BCFF';
   switch (data.category) {
@@ -57,8 +58,8 @@ export default function BoardCard({ data }) {
       CardColor = '#000';
       break;
     default:
-      CardImg = FoodETC;
-      CardColor = '#C2C7D0';
+      CardImg = Game;
+      CardColor = '#000';
   }
 
   return (
@@ -70,22 +71,23 @@ export default function BoardCard({ data }) {
       ) : null}
 
       <div className="dm-card-img-bg" style={{ backgroundColor: CardColor }}>
-        {data.category !== '게임' && (
+        {!data.winner && (
           <div className="dm-card-food-category">{data.category}</div>
         )}
+
         <img className="dm-card-img" src={CardImg} />
       </div>
       <div className="dm-card-content-wrapper">
         <div className="dm-card-content-top">
-          <div className="dm-card-content-top-title">멘츠루</div>
+          <div className="dm-card-content-top-title">{data.title}</div>
           <div className="dm-card-content-top-person">
             <img className="dm-card-content-top-person-img" src={UserImg} />
-            <div className="dm-card-content-top-person-count">1/3</div>
+            <div className="dm-card-content-top-person-count">
+              {data.currentCount}/{data.totalCount}
+            </div>
           </div>
         </div>
-        <div className="dm-card-content">
-          멘츠루 먹을 사람 3명 더 구합니다. 햄버거 냠냠
-        </div>
+        <div className="dm-card-content">{data.content}</div>
         <div className="dm-card-content-bottom">
           {data.isAnonymous ? (
             <>
@@ -93,7 +95,7 @@ export default function BoardCard({ data }) {
             </>
           ) : (
             <>
-              <div className="dm-card-content-bottom-name">박준승</div>
+              <div className="dm-card-content-bottom-name">{data.name}</div>
             </>
           )}
 
