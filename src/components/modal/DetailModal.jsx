@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import profileImage from "../../src/assets/profileImage.png";
+import profileImage from "../../assets/profileImage.png";
 import "./index.css";
 
 function DetailModal({ post, show, onHide }) {
@@ -152,7 +152,8 @@ function DetailModal({ post, show, onHide }) {
     fontFamily: "Jalnan, sans-serif",
     fontSize: "12px",
     color: currentParticipants === maxParticipants ? "#022DA6" : "#FFFFFF",
-    border: currentParticipants === maxParticipants ? "1px solid #022DA6" : "none",
+    border:
+      currentParticipants === maxParticipants ? "1px solid #022DA6" : "none",
     cursor: currentParticipants === maxParticipants ? "default" : "pointer",
     minWidth: "80px",
   };
@@ -213,14 +214,12 @@ function DetailModal({ post, show, onHide }) {
             : "참여하기"}
         </button>
         <p style={participantsStyle}>
-          현재 참여 인원: <span style={{ color: "#022DA6" }}>{currentParticipants}명</span>/{maxParticipants}명
+          현재 참여 인원:{" "}
+          <span style={{ color: "#022DA6" }}>{currentParticipants}명</span>/
+          {maxParticipants}명
         </p>
-        <span style={{ ...tagStyle, left: "21.89%", top: "80%" }}>
-          문종근
-        </span>
-        <span style={{ ...tagStyle, left: "43.49%", top: "80%" }}>
-          이유진
-        </span>
+        <span style={{ ...tagStyle, left: "21.89%", top: "80%" }}>문종근</span>
+        <span style={{ ...tagStyle, left: "43.49%", top: "80%" }}>이유진</span>
       </div>
     </div>
   );
