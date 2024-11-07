@@ -94,17 +94,17 @@ export default function PostPage() {
             </Form.Group>
           </div>
           <div>
-            <div className="board-list-wrapper">
+            <div className="dm-board-list-wrapper">
               <div>카테고리</div>
-              <div className="board-card-wrapper">
+              <div className="dm-board-card-wrapper">
                 <Swiper
-                  slidesPerView={4.5}
-                  spaceBetween={20}
+                  slidesPerView={4.3}
+                  spaceBetween={0}
                   freeMode={true}
                   modules={[FreeMode, Pagination]}
                   grabCursor={true}
                   style={{ overflowX: 'auto' }}
-                  className="mySwiper"
+                  className="dm-mySwiper"
                 >
                   {CATEGORY_LIST.map((elem, i) => {
                     return (
@@ -145,7 +145,7 @@ export default function PostPage() {
           <div>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>총 인원</Form.Label>
-              <Form.Control type="number" autoFocus />
+              <Form.Control type="number" />
             </Form.Group>
           </div>
           <div
@@ -193,8 +193,6 @@ export default function PostPage() {
                 as="input"
                 type="text"
                 placeholder="장소, 시간 등을 포함해주세요"
-                autoFocus
-                className="asd"
               />
             </Form.Group>
           </div>
@@ -214,7 +212,7 @@ export default function PostPage() {
           <div>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>총 인원</Form.Label>
-              <Form.Control type="number" autoFocus />
+              <Form.Control type="number" />
             </Form.Group>
           </div>
           <div
