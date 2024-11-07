@@ -1,20 +1,27 @@
 import axios from "axios";
 
-export async function postLogout() {}
+export async function postLogout() {
+  try {
+    const res = await axios.post("http://localhost:3000/api/logout", {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+  } catch (err) {
+    return err;
+  }
+}
 
 export const postLogin = async (nickname) => {
-  console.log("name111111", nickname);
   try {
-    console.log(nickname);
-    // const res = await axios.post("http://localhost:3000/", {
-    //   nickname: nickname,
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // });
-    return await res.json();
+    const res = await axios.post("http://localhost:3000/api/login", {
+      nickname: nickname,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return res.data;
   } catch (err) {
-    console.log(err);
-    return {};
+    return "";
   }
 };
