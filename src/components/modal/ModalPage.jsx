@@ -4,7 +4,7 @@ import DetailModal from "./DetailModal";
 import SnackModal from "./SnackModal";
 import "./index.css";
 
-function MainPage() {
+function ModalPage() {
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
   const [isSnackModalOpen, setIsSnackModalOpen] = useState(false);
   const [selectedPost, setSelectedPost] = useState(null);
@@ -76,4 +76,4 @@ function MainPage() {
   );
 }
 
-export default MainPage;
+export default ModalPage;

@@ -3,6 +3,7 @@ import Layout from "../components/common/Layout";
 import MainPage from "../pages/MainPage";
 import LoginPage from "../pages/LoginPage";
 import PostPage from "../pages/PostPage";
+import ModalPage from "../components/modal/ModalPage";
 import { useLogin } from "../lib/hooks/useLogin";
 
 function ProtectedRoute({ element }) {
@@ -22,6 +23,11 @@ export const mainRoutes = [
   {
     path: "/login",
     element: <LoginPage />,
+  },
+  {
+    path: "/main",
+    element: <ModalPage />,
+    children: [{ element: <ModalPage />, path: ":id" }],
   },
 ];
 

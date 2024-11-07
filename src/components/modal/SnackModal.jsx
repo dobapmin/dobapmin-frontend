@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import profileImage from "../../src/assets/profileImage.png";
+import profileImage from "../../assets/profileImage.png";
 import "./index.css";
-
 
 function SnackModal({ post, show, onHide }) {
   if (!show) return null;
@@ -10,7 +9,9 @@ function SnackModal({ post, show, onHide }) {
   const [currentParticipants, setCurrentParticipants] = useState(14); // 현재 참여 인원
   const maxParticipants = 15; // 총 인원
   const [isDrawn, setIsDrawn] = useState(false); // 뽑기 시작 여부
-  const [content, setContent] = useState("롯데리아 소프트콘빵 10명 구합니다 나만 안 걸리면 돼");
+  const [content, setContent] = useState(
+    "롯데리아 소프트콘빵 10명 구합니다 나만 안 걸리면 돼"
+  );
 
   const handleJoinClick = () => {
     if (isParticipating) {
@@ -125,7 +126,7 @@ function SnackModal({ post, show, onHide }) {
     color: "#000000",
   };
 
-const contentStyle = {
+  const contentStyle = {
     position: "absolute",
     left: "8.58%",
     right: "11.83%",
@@ -169,25 +170,25 @@ const contentStyle = {
     minWidth: "80px",
   };
 
-//   const participantsStyle = {
-//     position: "absolute",
-//     left: "50%",
-//     top: isDrawn ? "70%" : "75.73%",
-//     transform: "translateX(-50%)", 
-//     fontFamily: "Jalnan, sans-serif",
-//     fontSize: isDrawn ? "30px" : "16px",
-//     width: "280px",
-//     height: "170px",
-//     margin: 0,
-//     backgroundColor: isDrawn ? "#474747" : 'FFFFFF',
-//     borderRadius: "16px",
-//     padding: isDrawn ? "25px" : 0,
-//     color: isDrawn ? "#FFFFFF" : '#000000',
-//     textAlign: "center",
-//     whiteSpace: "nowrap", 
-//   };
+  //   const participantsStyle = {
+  //     position: "absolute",
+  //     left: "50%",
+  //     top: isDrawn ? "70%" : "75.73%",
+  //     transform: "translateX(-50%)",
+  //     fontFamily: "Jalnan, sans-serif",
+  //     fontSize: isDrawn ? "30px" : "16px",
+  //     width: "280px",
+  //     height: "170px",
+  //     margin: 0,
+  //     backgroundColor: isDrawn ? "#474747" : 'FFFFFF',
+  //     borderRadius: "16px",
+  //     padding: isDrawn ? "25px" : 0,
+  //     color: isDrawn ? "#FFFFFF" : '#000000',
+  //     textAlign: "center",
+  //     whiteSpace: "nowrap",
+  //   };
 
-const participantsStyle = {
+  const participantsStyle = {
     position: "absolute",
     left: "50%",
     top: isDrawn ? "70%" : "75.73%",
@@ -206,7 +207,6 @@ const participantsStyle = {
     textAlign: "center",
     whiteSpace: "nowrap",
   };
-  
 
   const drawButtonStyle = {
     position: "absolute",
