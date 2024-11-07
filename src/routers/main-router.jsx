@@ -3,12 +3,12 @@ import Layout from "../components/common/Layout";
 import MainPage from "../pages/MainPage";
 import LoginPage from "../pages/LoginPage";
 import PostPage from "../pages/PostPage";
+import ModalPage from "../components/modal/ModalPage";
 import { useLogin } from "../lib/hooks/useLogin";
 
 function ProtectedRoute({ element }) {
   const { loggedIn } = useLogin();
-  return loggedIn !== "" ? element : <Navigate to="/login" replace />;
-  // return loggedIn === "" ? element : element;
+  return loggedIn !== null ? element : <Navigate to="/login" replace />;
 }
 
 export const mainRoutes = [
@@ -23,6 +23,11 @@ export const mainRoutes = [
   {
     path: "/login",
     element: <LoginPage />,
+  },
+  {
+    path: "/main",
+    element: <ModalPage />,
+    children: [{ element: <ModalPage />, path: ":id" }],
   },
 ];
 
