@@ -1,24 +1,32 @@
 import React from "react";
 import SolImg from "../assets/solImg.png";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLogin } from "../lib/hooks/useLogin";
 import { postLogin } from "../lib/apis/login";
 
 export default function LoginPage() {
   const { loggedIn, setLoggedIn } = useLogin();
-
-  const [name, setName] = useState("");
+  const [nickname, setNickname] = useState("");
 
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    postLogin(name).then(() => {
-      setLoggedIn(name);
+    postLogin(nickname).then((res) => {
+      if (res === "") {
+        alert("다시 입력해주세요😭");
+      } else {
+        localStorage.setItem("dobapmin", JSON.stringify(res));
+        setLoggedIn(res);
+      }
+      setNickname("");
     });
-    navigate("/");
   };
-
+  useEffect(() => {
+    if (loggedIn?.name) {
+      navigate("/");
+    }
+  }, [loggedIn]);
   return (
     <div
       style={{
@@ -48,8 +56,9 @@ export default function LoginPage() {
         placeholder:style={{ color: "#CACACA" }}
         placeholder="닉네임"
         onChange={(e) => {
-          setName(e.target.value);
+          setNickname(e.target.value);
         }}
+        value={nickname}
       />
       <button
         onClick={handleLogin}
