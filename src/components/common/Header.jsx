@@ -8,10 +8,15 @@ import { useNavigate } from "react-router-dom";
 export default function Header() {
   const { loggedIn, setLoggedIn } = useLogin();
   const navigate = useNavigate();
+
   const handleLogout = () => {
-    postLogout().then(setLoggedIn(""));
-    navigate("/login");
+    postLogout().then((res) => {
+      navigate("/login");
+      setLoggedIn(null);
+      localStorage.removeItem("dobapmin");
+    });
   };
+
   return (
     <div
       style={{
@@ -59,7 +64,7 @@ export default function Header() {
               border: "none",
             }}
           >
-            {loggedIn}
+            {loggedIn?.name}
           </div>
         </div>
 
