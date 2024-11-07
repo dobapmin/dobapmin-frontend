@@ -1,0 +1,15 @@
+.board-title {
+  display: flex;
+  align-items: center;
+  color: #000;
+  font-family: 'Noto Sans KR';
+  font-size: 28px;
+  font-weight: 900;
+  line-height: normal;
+}
+
+.pin-icon {
+  width: 32px;
+  height: 32px;
+  margin-right: 8px;
+}

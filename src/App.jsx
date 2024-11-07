@@ -1,15 +1,13 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import MainPage from "./components/MainPage";
+// App.jsx
+import { RouterProvider, Navigate } from "react-router-dom";
+import mainRouter from "./routers/main-router";
+import { LoginProvider } from "./context/loginContext";
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/main" element={<MainPage />} />
-        <Route path="/main/:id" element={<MainPage />} />
-      </Routes>
-    </Router>
+    <LoginProvider>
+      <RouterProvider router={mainRouter} />
+    </LoginProvider>
   );
 }
 
