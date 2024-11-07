@@ -62,42 +62,42 @@ export default function BoardCard({ data }) {
   }
 
   return (
-    <div className="card-wrapper">
+    <div className="dm-card-wrapper">
       {data.isEnd ? (
         <>
-          <div className="card-end">마감되었습니다.</div>
+          <div className="dm-card-end">마감되었습니다.</div>
         </>
       ) : null}
 
-      <div className="card-img-bg" style={{ backgroundColor: CardColor }}>
+      <div className="dm-card-img-bg" style={{ backgroundColor: CardColor }}>
         {data.category !== '게임' && (
-          <div className="card-food-category">{data.category}</div>
+          <div className="dm-card-food-category">{data.category}</div>
         )}
-        <img className="card-img" src={CardImg} />
+        <img className="dm-card-img" src={CardImg} />
       </div>
-      <div className="card-content-wrapper">
-        <div className="card-content-top">
-          <div className="card-content-top-title">멘츠루</div>
-          <div className="card-content-top-person">
-            <img className="card-content-top-person-img" src={UserImg} />
-            <div className="card-content-top-person-count">1/3</div>
+      <div className="dm-card-content-wrapper">
+        <div className="dm-card-content-top">
+          <div className="dm-card-content-top-title">멘츠루</div>
+          <div className="dm-card-content-top-person">
+            <img className="dm-card-content-top-person-img" src={UserImg} />
+            <div className="dm-card-content-top-person-count">1/3</div>
           </div>
         </div>
-        <div className="card-content">
+        <div className="dm-card-content">
           멘츠루 먹을 사람 3명 더 구합니다. 햄버거 냠냠
         </div>
-        <div className="card-content-bottom">
+        <div className="dm-card-content-bottom">
           {data.isAnonymous ? (
             <>
-              <div className="card-content-bottom-no-name">익명</div>
+              <div className="dm-card-content-bottom-no-name">익명</div>
             </>
           ) : (
             <>
-              <div className="card-content-bottom-name">박준승</div>
+              <div className="dm-card-content-bottom-name">박준승</div>
             </>
           )}
 
-          <div className="card-content-bottom-date">2024.11.04</div>
+          <div className="dm-card-content-bottom-date">2024.11.04</div>
         </div>
       </div>
     </div>
