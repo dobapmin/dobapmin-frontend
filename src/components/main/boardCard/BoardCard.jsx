@@ -17,7 +17,8 @@ import DetailModal from '../../modal/DetailModal';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
-export default function BoardCard({ data, onClick }) { // 바뀐 부분: onClick prop 추가
+export default function BoardCard({ data, onClick }) {
+  // 바뀐 부분: onClick prop 추가
   let CardImg = FoodETC;
   let CardColor = '#85BCFF';
   switch (data.category) {
@@ -96,10 +97,9 @@ export default function BoardCard({ data, onClick }) { // 바뀐 부분: onClick
   };
 
   return (
-    <div className="dm-card-wrapper" onClick={onClick}> {/* 바뀐 부분: onClick 속성 추가 */}
-      {data.isEnd ? (
-        <div className="dm-card-end">마감되었습니다.</div>
-      ) : null}
+    <div className="dm-card-wrapper" onClick={data.isEnd ? null : onClick}>
+      {/* 바뀐 부분: onClick 속성 추가 */}
+      {data.isEnd ? <div className="dm-card-end">마감되었습니다.</div> : null}
       <div className="dm-card-img-bg" style={{ backgroundColor: CardColor }}>
         {!data.winner && data.winner !== '' && (
           <div className="dm-card-food-category">{data.category}</div>
