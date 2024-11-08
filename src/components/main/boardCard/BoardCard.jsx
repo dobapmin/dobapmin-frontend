@@ -12,7 +12,7 @@ import Game from '../../../assets/food_category/game.png';
 import UserImg from '../../../assets/userImg.png';
 import { useState } from 'react';
 
-export default function BoardCard({ data }) {
+export default function BoardCard({ data, onClick }) { // 바뀐 부분: onClick prop 추가
   let CardImg = FoodETC;
   let CardColor = '#85BCFF';
   switch (data.category) {
@@ -62,11 +62,9 @@ export default function BoardCard({ data }) {
   }
 
   return (
-    <div className="dm-card-wrapper">
+    <div className="dm-card-wrapper" onClick={onClick}> {/* 바뀐 부분: onClick 속성 추가 */}
       {data.isEnd ? (
-        <>
-          <div className="dm-card-end">마감되었습니다.</div>
-        </>
+        <div className="dm-card-end">마감되었습니다.</div>
       ) : null}
 
       <div className="dm-card-img-bg" style={{ backgroundColor: CardColor }}>
@@ -89,13 +87,9 @@ export default function BoardCard({ data }) {
         <div className="dm-card-content">{data.content}</div>
         <div className="dm-card-content-bottom">
           {data.isAnonymous ? (
-            <>
-              <div className="dm-card-content-bottom-no-name">익명</div>
-            </>
+            <div className="dm-card-content-bottom-no-name">익명</div>
           ) : (
-            <>
-              <div className="dm-card-content-bottom-name">{data.name}</div>
-            </>
+            <div className="dm-card-content-bottom-name">{data.name}</div>
           )}
 
           <div className="dm-card-content-bottom-date">{data.createdAt}</div>
