@@ -1,10 +1,12 @@
 import React from 'react';
 import CategoryButton from '../components/post/categoryBoard/CategoryButton';
 import './PostPage.css';
-import { useState } from 'react';
-
+import { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { useLogin } from '../lib/hooks/useLogin';
 
 // swiper
 // Import Swiper React components
@@ -33,8 +35,15 @@ const CATEGORY_LIST = [
 const TITLE_CATEGORY_LIST = ['밥 메이트', '익명 메이트', '간식 내기'];
 
 export default function PostPage() {
-  const [selectedCategory, setSelectedCategory] = useState('밥 메이트');
-  const [selectedFoodCategory, setSelectedFoodCategory] = useState('한식');
+  const [isGame, setIsGame] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState('밥 메이트'); // 글 종류
+  const [selectedFoodCategory, setSelectedFoodCategory] = useState('한식'); //category
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+  const [isAnonymous, setIsAnonymous] = useState(false);
+  const [totalCount, setTotalCount] = useState(0);
+  const { loggedIn } = useLogin();
+  const navigate = useNavigate();
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
@@ -44,11 +53,59 @@ export default function PostPage() {
     setSelectedFoodCategory(category);
   };
 
-  const isGamePage = () => {
-    if (selectedCategory === '밥 메이트' || selectedCategory === '익명 메이트')
-      return false;
-    return true;
+  console.log('this', title, 'content', content, totalCount);
+  const handleSubmit = async () => {
+    let baseURL = '';
+    let body = {};
+    console.log('name', loggedIn.name);
+    if (isGame === true) {
+      // baseURL = 'http://54.180.251.176:3000/api/gameBoard';
+      baseURL = 'http://localhost:3000/api/gameBoard';
+      body = {
+        name: loggedIn.name,
+        title: title,
+        content: content,
+        totalCount: totalCount,
+      };
+    } else {
+      // baseURL = 'http://54.180.251.176:3000/api/board';
+      baseURL = 'http://localhost:3000/api/board';
+      console.log('this is board', title, content, totalCount);
+      body = {
+        name: loggedIn.name,
+        title: title,
+        content: content,
+        category: selectedFoodCategory,
+        isAnonymous: isAnonymous,
+        totalCount: totalCount,
+      };
+    }
+
+    try {
+      const res = await axios.post(baseURL, body);
+      navigate('/');
+      console.log(res);
+    } catch (err) {
+      return err;
+    }
   };
+
+  const isGamePage = () => {
+    if (selectedCategory === '밥 메이트') {
+      setIsAnonymous(false);
+      return false;
+    } else if (selectedCategory === '익명 메이트') {
+      setIsAnonymous(true);
+      return false;
+    } else {
+      setIsAnonymous(false);
+      return true;
+    }
+  };
+
+  useEffect(() => {
+    setIsGame(isGamePage);
+  }, [selectedCategory]);
 
   return (
     <div className="root">
@@ -63,6 +120,7 @@ export default function PostPage() {
           return (
             <>
               <CategoryButton
+                key={i}
                 text={elem}
                 style={{ width: '137px', height: '44px' }}
                 isSelected={selectedCategory === elem}
@@ -73,7 +131,7 @@ export default function PostPage() {
         })}
       </div>
 
-      {!isGamePage() ? (
+      {!isGame ? (
         <div
           style={{
             marginTop: '25px',
@@ -90,6 +148,9 @@ export default function PostPage() {
                 type="text"
                 placeholder="장소, 시간 등을 포함해주세요"
                 autoFocus
+                onChange={(e) => {
+                  setTitle(e.target.value);
+                }}
               />
             </Form.Group>
           </div>
@@ -136,6 +197,7 @@ export default function PostPage() {
             >
               <Form.Label>내용</Form.Label>
               <Form.Control
+                onChange={(e) => setContent(e.target.value)}
                 as="textarea"
                 rows={5}
                 placeholder="장소, 시간 등을 포함해주세요"
@@ -145,7 +207,12 @@ export default function PostPage() {
           <div>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>총 인원</Form.Label>
-              <Form.Control type="number" />
+              <Form.Control
+                type="number"
+                onChange={(e) => {
+                  setTotalCount(Number(e.target.value));
+                }}
+              />
             </Form.Group>
           </div>
           <div
@@ -155,6 +222,7 @@ export default function PostPage() {
             }}
           >
             <Button
+              onClick={() => handleSubmit()}
               style={{
                 backgroundColor: '#002DA7',
                 color: '#FFFFFF',
@@ -190,6 +258,9 @@ export default function PostPage() {
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>제목</Form.Label>
               <Form.Control
+                onChange={(e) => {
+                  setTitle(e.target.value);
+                }}
                 as="input"
                 type="text"
                 placeholder="장소, 시간 등을 포함해주세요"
@@ -203,6 +274,9 @@ export default function PostPage() {
             >
               <Form.Label>내용</Form.Label>
               <Form.Control
+                onChange={(e) => {
+                  setContent(e.target.value);
+                }}
                 as="textarea"
                 rows={5}
                 placeholder="장소, 시간 등을 포함해주세요"
@@ -212,7 +286,12 @@ export default function PostPage() {
           <div>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>총 인원</Form.Label>
-              <Form.Control type="number" />
+              <Form.Control
+                type="number"
+                onChange={(e) => {
+                  setTotalCount(e.target.value);
+                }}
+              />
             </Form.Group>
           </div>
           <div
@@ -222,6 +301,7 @@ export default function PostPage() {
             }}
           >
             <Button
+              onClick={() => handleSubmit()}
               style={{
                 backgroundColor: '#002DA7',
                 color: '#FFFFFF',

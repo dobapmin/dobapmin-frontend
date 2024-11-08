@@ -1,9 +1,9 @@
-import React from "react";
-import mainLogo from "../../assets/mainLogo.png";
-import userImg from "../../assets/userImg.png";
-import { postLogout } from "../../lib/apis/login";
-import { useLogin } from "../../lib/hooks/useLogin";
-import { useNavigate } from "react-router-dom";
+import React from 'react';
+import mainLogo from '../../assets/mainLogo.png';
+import userImg from '../../assets/userImg.png';
+import { postLogout } from '../../lib/apis/login';
+import { useLogin } from '../../lib/hooks/useLogin';
+import { useNavigate } from 'react-router-dom';
 
 export default function Header() {
   const { loggedIn, setLoggedIn } = useLogin();
@@ -11,57 +11,65 @@ export default function Header() {
 
   const handleLogout = () => {
     postLogout().then((res) => {
-      navigate("/login");
+      navigate('/login');
       setLoggedIn(null);
-      localStorage.removeItem("dobapmin");
+      localStorage.removeItem('dobapmin');
     });
+  };
+
+  const handleNavigate = () => {
+    navigate('/');
   };
 
   return (
     <div
       style={{
-        height: "10vh",
-        backgroundColor: "white",
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        paddingLeft: "100px",
-        paddingRight: "100px",
+        height: '10vh',
+        backgroundColor: 'white',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingLeft: '100px',
+        paddingRight: '100px',
       }}
     >
-      <img src={mainLogo} style={{ objectFit: "cover", height: "100%" }} />
+      <img
+        src={mainLogo}
+        style={{ objectFit: 'cover', height: '100%' }}
+        onClick={handleNavigate}
+      />
       <div
         style={{
-          display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
-          gap: "30px",
-          backgroundColor: "white",
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          gap: '30px',
+          backgroundColor: 'white',
         }}
       >
         <div
           style={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
-            gap: "5px",
-            backgroundColor: "white",
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            gap: '5px',
+            backgroundColor: 'white',
           }}
         >
           <img
             src={userImg}
             style={{
-              width: "25px",
-              height: "25px",
-              backgroundColor: "white",
-              border: "none",
+              width: '25px',
+              height: '25px',
+              backgroundColor: 'white',
+              border: 'none',
             }}
           />
           <div
             style={{
-              fontFamily: "Jalnan",
-              backgroundColor: "white",
-              border: "none",
+              fontFamily: 'Jalnan',
+              backgroundColor: 'white',
+              border: 'none',
             }}
           >
             {loggedIn?.name}
@@ -70,17 +78,17 @@ export default function Header() {
 
         <button
           style={{
-            backgroundColor: "#002DA7",
-            color: "white",
-            height: "45px",
-            width: "120px",
-            fontFamily: "Jalnan",
-            borderRadius: "15px",
-            border: "none",
+            backgroundColor: '#002DA7',
+            color: 'white',
+            height: '45px',
+            width: '120px',
+            fontFamily: 'Jalnan',
+            borderRadius: '15px',
+            border: 'none',
           }}
           onClick={handleLogout}
         >
-          {" "}
+          {' '}
           로그아웃
         </button>
       </div>
