@@ -101,7 +101,7 @@ export default function BoardCard({ data, onClick }) { // 바뀐 부분: onClick
         <div className="dm-card-end">마감되었습니다.</div>
       ) : null}
       <div className="dm-card-img-bg" style={{ backgroundColor: CardColor }}>
-        {!data.winner && (
+        {!data.winner && data.winner !== '' && (
           <div className="dm-card-food-category">{data.category}</div>
         )}
 

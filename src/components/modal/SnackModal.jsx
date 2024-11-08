@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import profileImage from '../../assets/profileImage.png';
 import './index.css';
 import { useLogin } from '../../lib/hooks/useLogin';
+import CanvasConfetti from './confetti/CanvasConfetti';
 
 function SnackModal({ postId, show, onHide }) {
   const [post, setPost] = useState(null);
@@ -221,6 +222,12 @@ function SnackModal({ postId, show, onHide }) {
 
   return (
     <div style={modalOverlayStyle} onClick={onHide}>
+      {isDrawn && (
+        <>
+          <CanvasConfetti />
+        </>
+      )}
+
       <div style={modalStyle} onClick={(e) => e.stopPropagation()}>
         <button style={closeButtonStyle} onClick={onHide} aria-label="닫기">
           &times;
