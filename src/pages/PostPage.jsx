@@ -51,15 +51,37 @@ export default function PostPage() {
     let isAnonymous = false;
     if (selectedCategory === '익명 메이트') isAnonymous=true;
     postBap(userInputTitle, userInputContent, selectedFoodCategory, isAnonymous, userInputTotalCount)
-    window.alert("등록 완료.");
-    navigate('/');
+    .then((status) => {
+      if (status === 201) {
+        window.alert("등록 완료 😛");
+        navigate('/');
+      }
+      else {
+        window.alert("다시 시도해주세요 🥲");
+        console.log("서버 응답 코드: ", status);
+      }
+    }).catch((err) => {
+      window.alert("다시 시도해주세요 🥲");
+      console.log(err);
+    });
   };
 
   // 간식 내기 선택 후 확인 버튼 클릭 시
   const snackConfirmClick = () => {
-    postGame(userInputTitle, userInputContent, userInputTotalCount);
-    window.alert("등록 완료.");
-    navigate('/');
+    postGame(userInputTitle, userInputContent, userInputTotalCount)
+    .then((status) => {
+      if (status === 201) {
+        window.alert("등록 완료 😛");
+        navigate('/');
+      }
+      else {
+        window.alert("다시 시도해주세요 🥲");
+        console.log("서버 응답 코드: ", status);
+      }
+    }).catch((err) => {
+      window.alert("다시 시도해주세요 🥲");
+      console.log(err);
+    })
   };
 
   const handleCategoryClick = (category) => {
@@ -122,7 +144,6 @@ export default function PostPage() {
                 autoFocus
                 onChange={(e) => {
                   setUserInputTitle(e.target.value);
-                  console.log(e.target.value);
                 }}
               />
             </Form.Group>
@@ -176,7 +197,6 @@ export default function PostPage() {
                 placeholder="장소, 시간 등을 포함해주세요"
                 onChange={(e) => {
                   setUserInputContent(e.target.value);
-                  console.log(e.target.value);
                 }}
               />
             </Form.Group>
@@ -192,7 +212,6 @@ export default function PostPage() {
                 if (value > 30) value = 30;
 
                 setUserInputTotalCount(value);
-                console.log(value);
               }} />
             </Form.Group>
           </div>

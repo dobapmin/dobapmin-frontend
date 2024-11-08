@@ -18,7 +18,8 @@ export const postBap = async (title, content, category, isAnonymous, totalCount)
           "Content-Type": "application/json",
         }
       });
-    return response.data;
+      console.log(response.status);
+    return response.status;
   } catch (e) {
     console.error(e);
   }
@@ -37,7 +38,7 @@ export const postGame = async (title, content, totalCount) => {
             "Content-Type": "application/json",
           }
         });
-      return response.data;
+      return response.status;
     } catch (e) {
       console.error(e);
     }
