@@ -1,101 +1,281 @@
-import React, { useState } from 'react';
-import { Modal, Button } from 'react-bootstrap';
+import React, { useState, useEffect } from 'react';
 import profileImage from '../../assets/profileImage.png';
 import './index.css';
 
-function SnackModal({ post, show, onHide }) {
+function SnackModal({ postId, show, onHide }) {
+  const [post, setPost] = useState(null);
   const [isParticipating, setIsParticipating] = useState(false);
-  const [currentParticipants, setCurrentParticipants] = useState(14);
-  const maxParticipants = 15;
-  const [isDrawn, setIsDrawn] = useState(false);
-  const [content, setContent] = useState(
-    '롯데리아 소프트콘빵 10명 구합니다 나만 안 걸리면 돼'
-  );
+  const [currentParticipants, setCurrentParticipants] = useState(0);
+  const [winner, setWinner] = useState(''); // 당첨자 상태 추가
+  const [isDrawn, setIsDrawn] = useState(false); // 뽑기 완료 상태 추가
+
+  // API 요청을 통해 데이터 불러오기
+  useEffect(() => {
+    if (postId) {
+      fetch(`http://localhost:3000/api/gameBoard/${postId}`, {
+        method: 'GET',
+        credentials: 'include',
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setPost(data);
+          setCurrentParticipants(data.currentCount || 0);
+          setWinner(data.winner || ''); // 기존에 당첨자가 있으면 표시
+          setIsDrawn(data.isEnd || false); // 기존에 마감 상태면 표시
+        })
+        .catch((error) => console.error('Error fetching data:', error));
+    }
+  }, [postId]);
+
+  if (!show || !post) return null;
+
+  const maxParticipants = post.totalCount || 0;
 
   const handleJoinClick = () => {
     if (isParticipating) {
       setIsParticipating(false);
       setCurrentParticipants(currentParticipants - 1);
-    } else if (currentParticipants < maxParticipants - 1) {
+    } else if (currentParticipants < maxParticipants) {
       setIsParticipating(true);
       setCurrentParticipants(currentParticipants + 1);
-    } else if (currentParticipants === maxParticipants - 1) {
-      setIsParticipating(true);
-      setCurrentParticipants(maxParticipants);
     }
   };
 
   const handleDrawClick = () => {
-    setIsDrawn(true);
-    setContent('당첨자: 박고은 🎉🎊🎉');
+    if (!isDrawn && post.participate.length > 0) {
+      const randomWinner = post.participate[Math.floor(Math.random() * post.participate.length)];
+      setWinner(randomWinner);
+      setIsDrawn(true);
+    }
+  };
+
+  const formattedDate = post.createdAt
+    ? post.createdAt.slice(2, 4) + '.' + post.createdAt.slice(5, 7) + '.' + post.createdAt.slice(8, 10)
+    : '';
+
+  const categoryTitle = '간식 내기';
+
+  const modalOverlayStyle = {
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 1000,
+  };
+
+  const modalStyle = {
+    position: 'relative',
+    width: '25%',
+    height: '80%',
+    maxWidth: '500px',
+    background: '#FFFFFF',
+    border: '3px solid #000000',
+    borderRadius: '15px',
+    boxSizing: 'border-box',
+    padding: '20px',
+  };
+
+  const closeButtonStyle = {
+    position: 'absolute',
+    right: '10px',
+    top: '10px',
+    background: 'none',
+    border: 'none',
+    fontSize: '24px',
+    fontWeight: 'bold',
+    cursor: 'pointer',
+    color: '#000000',
+    zIndex: 1001,
+  };
+
+  const titleStyle = {
+    textAlign: 'center',
+    fontFamily: 'Jalnan, sans-serif',
+    fontSize: '20px',
+    lineHeight: '24px',
+    color: '#000000',
+    marginBottom: '20px',
+  };
+
+  const profileContainerStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: '10px',
+  };
+
+  const profileImageStyle = {
+    width: '50px',
+    height: '50px',
+    borderRadius: '25px',
+    };
+
+  const authorStyle = {
+    paddingLeft: '10px',  
+    fontFamily: 'Jalnan, sans-serif',
+    fontSize: '14px',
+    color: '#000000',
+  };
+
+  const dateStyle = {
+    fontFamily: 'Jalnan, sans-serif',
+    fontSize: '14px',
+    color: '#000000',
+    textAlign: 'right',
+  };
+
+  const postTitleStyle = {
+    fontFamily: 'Jalnan, sans-serif',
+    fontSize: '18px',
+    color: '#000000',
+    marginTop: '20px',
+    marginBottom: '10px',
+  };
+
+  const contentStyle = {
+    minHeight: '200px',
+    maxHeight: '200px',
+    overflowY: 'auto',
+    fontFamily: 'Noto Sans KR, sans-serif',
+    fontSize: isDrawn ? '30px' : '14px',
+    color: isDrawn ? '#000000' : '#000000',
+    textAlign: isDrawn ? 'center' : 'left',
+    marginBottom: '10px',
+    marginTop: '20px',
+  };
+
+  const separatorStyle = {
+    width: '100%',
+    height: '1px',
+    backgroundColor: '#E5E5E5',
+    margin: '10px 0',
+  };
+
+  const buttonStyle = {
+    display: 'block',
+    margin: '10px auto',
+    padding: '7px 15px',
+    background: '#022DA6',
+    color: '#FFFFFF',
+    fontFamily: 'Jalnan, sans-serif',
+    fontSize: '12px',
+    border: '1.5px solid #022DA6',
+    borderRadius: '10px',
+    cursor: 'pointer',
+    minWidth: '80px',
+  };
+
+  const disabledButtonStyle = {
+    ...buttonStyle,
+    background: '#474747',
+    cursor: 'not-allowed',
+    height: '170px',
+    width: '310px',
+    border: '1.5px solid #474747',
+    borderRadius: '16px'
+  };
+
+  const participantsStyle = {
+    textAlign: 'center',
+    fontFamily: 'Jalnan, sans-serif',
+    fontSize: '14px',
+    color: '#000000',
+    marginBottom: '10px',
+  };
+
+  const winnerStyle = {
+    fontFamily: 'Jalnan, sans-serif',
+    fontSize: '34px',
+    color: '#000000',
+    margin: '20px 0',
+  };
+
+  const tagContainerStyle = {
+    display: 'flex',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    gap: '10px',
+    marginTop: '10px',
+  };
+
+  const tagStyle = {
+    padding: '2px 13px',
+    background: '#FFFFFF',
+    border: '1.5px solid #022DA6',
+    borderRadius: '10px',
+    fontFamily: 'Jalnan, sans-serif',
+    fontSize: '12px',
+    color: '#000000',
   };
 
   return (
-    <Modal show={show} onHide={onHide} centered>
-      <Modal.Header closeButton>
-        <Modal.Title>간식 내기</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <div className="d-flex align-items-center mb-3">
-          <img
-            src={profileImage}
-            alt="프로필 이미지"
-            className="rounded-circle me-3"
-            width="50"
-            height="50"
-          />
+    <div style={modalOverlayStyle} onClick={onHide}>
+      <div style={modalStyle} onClick={(e) => e.stopPropagation()}>
+        <button style={closeButtonStyle} onClick={onHide} aria-label="닫기">
+          &times;
+        </button>
+        <h5 style={titleStyle}>{categoryTitle}</h5>
+
+        <div style={profileContainerStyle}>
           <div>
-            <p className="mb-0 fw-bold">{post.author}</p>
-            <p className="mb-0 text-muted">{post.date}</p>
+            <img src={profileImage} alt="프로필 이미지" style={profileImageStyle} />
+            <span style={authorStyle}>{post.name}</span>
           </div>
+          <span style={dateStyle}>{formattedDate}</span>
         </div>
-        <h5 className="fw-bold">{post.title}</h5>
-        <hr />
-        <div style={{ textAlign: isDrawn ? 'center' : 'left' }}>
-          <p
-            className={`fs-${isDrawn ? '3' : '6'} ${isDrawn ? 'fw-bold' : ''}`}
-            style={{ lineHeight: isDrawn ? '1.5' : '1.2' }}
-          >
-            {content}
-          </p>
+
+        <h5 style={postTitleStyle}>{post.title}</h5>
+        <div style={separatorStyle}></div>
+
+        <div style={contentStyle}>
+          {isDrawn ? (
+            <p style={winnerStyle}>당첨자: {winner} <br></br> 🎉🎊🎉</p>
+          ) : (
+            <p>{post.content}</p>
+          )}
         </div>
-        <hr />
-        {isDrawn ? (
-          <p className="text-center fw-bold">마감되었습니다</p>
-        ) : (
+
+        <div style={separatorStyle}></div>
+
+        {!isDrawn ? (
           <>
-            <Button
-              variant={
-                currentParticipants === maxParticipants
-                  ? 'outline-primary'
-                  : 'primary'
-              }
+            <button
+              style={buttonStyle}
               onClick={handleJoinClick}
-              disabled={currentParticipants === maxParticipants}
-              className="w-100 mb-3"
+              disabled={currentParticipants >= maxParticipants}
             >
-              {currentParticipants === maxParticipants
-                ? '마감됨'
-                : isParticipating
-                ? '참여취소'
-                : '참여하기'}
-            </Button>
-            <p className="text-center">
-              현재 참여 인원:{' '}
-              <span className="text-primary">{currentParticipants}명</span>/
-              {maxParticipants}명
+              {currentParticipants >= maxParticipants ? '마감됨' : isParticipating ? '참여취소' : '참여하기'}
+            </button>
+            <p style={participantsStyle}>
+              현재 참여 인원: <span style={{ color: '#022DA6' }}>{currentParticipants}명</span>/{maxParticipants}명
             </p>
-            <Button
-              variant="success"
+            <button
+              style={buttonStyle}
               onClick={handleDrawClick}
-              className="w-100"
+              disabled={isDrawn}
             >
               뽑기 시작
-            </Button>
+            </button>
+            <div style={tagContainerStyle}>
+              {post.participate.map((participant) => (
+                <div style={tagStyle} key={participant}>
+                  {participant}
+                </div>
+              ))}
+            </div>
           </>
+        ) : (
+          <button style={{ ...disabledButtonStyle, fontSize: '18px', padding: '15px 30px' }}>
+            마감되었습니다
+          </button>
         )}
-      </Modal.Body>
-    </Modal>
+      </div>
+    </div>
   );
 }
 
