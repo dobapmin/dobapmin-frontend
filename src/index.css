@@ -17,3 +17,8 @@
   font-family: 'Jua';
   src: url('./fonts/BMJUA_ttf.ttf');
 }
+
+@font-face {
+  font-family: 'NotoSansKR_Black';
+  src: url('./fonts/NotoSansKR-Black.ttf');
+}
