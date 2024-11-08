@@ -39,7 +39,7 @@ export default function MainPage() {
 
   const handlePostClick = (post) => {
     setSelectedPostId(post._id);
-    if (post.category === '내기 게시글' || post.title === '간식 내기') {
+    if (post.hasOwnProperty('winner')) { // 바뀐 부분: winner 속성을 기준으로 SnackModal 열기
       setIsSnackModalOpen(true);
     } else {
       setIsDetailModalOpen(true);

@@ -1,268 +1,11 @@
-// import React, { useState } from 'react';
-// import profileImage from '../../assets/profileImage.png';
-// import './index.css';
-
-// function DetailModal({ post, show, onHide }) {
-//   if (!show) return null;
-//   const [isParticipating, setIsParticipating] = useState(false);
-//   const [currentParticipants, setCurrentParticipants] = useState(13); // 현재 참여 인원
-//   const maxParticipants = 15; // 총 인원
-
-//   const handleJoinClick = () => {
-//     if (isParticipating) {
-//       // 참여 중이면 참여 취소, 현재 인원 감소
-//       setIsParticipating(false);
-//       setCurrentParticipants(currentParticipants - 1);
-//     } else if (currentParticipants < maxParticipants - 1) {
-//       // 참여 인원이 최대 인원 - 1 미만이면 참여하기 가능
-//       setIsParticipating(true);
-//       setCurrentParticipants(currentParticipants + 1);
-//     } else if (currentParticipants === maxParticipants - 1) {
-//       // 참여 인원이 최대 인원 - 1일 때 마지막 참여로 마감
-//       setIsParticipating(true);
-//       setCurrentParticipants(maxParticipants);
-//     }
-//   };
-
-//   const modalOverlayStyle = {
-//     position: 'fixed',
-//     top: 0,
-//     left: 0,
-//     right: 0,
-//     bottom: 0,
-//     backgroundColor: 'rgba(0, 0, 0, 0.5)',
-//     display: 'flex',
-//     justifyContent: 'center',
-//     alignItems: 'center',
-//     zIndex: 1000,
-//   };
-
-//   const modalStyle = {
-//     position: 'relative',
-//     width: '338px',
-//     height: '80vh',
-//     background: '#FFFFFF',
-//     border: '3px solid #000000',
-//     borderRadius: '15px',
-//     boxSizing: 'border-box',
-//   };
-
-//   const closeButtonStyle = {
-//     position: 'absolute',
-//     right: '10px',
-//     top: '10px',
-//     background: 'none',
-//     border: 'none',
-//     fontSize: '24px',
-//     fontWeight: 'bold',
-//     cursor: 'pointer',
-//     color: '#000000',
-//     zIndex: 1001,
-//   };
-
-//   const titleStyle = {
-//     position: 'absolute',
-//     left: '0',
-//     right: '0',
-//     top: '3.51%',
-//     fontFamily: 'Jalnan, sans-serif',
-//     fontSize: '20px',
-//     lineHeight: '24px',
-//     color: '#000000',
-//     textAlign: 'center',
-//   };
-
-//   const profileImageStyle = {
-//     position: 'absolute',
-//     left: '5.62%',
-//     top: '10.84%',
-//     width: '14.5%',
-//     height: 'auto',
-//     borderRadius: '90px',
-//   };
-
-//   const authorStyle = {
-//     position: 'absolute',
-//     left: '22%',
-//     top: '13.5%',
-//     fontFamily: 'Jalnan, sans-serif',
-//     fontSize: '16px',
-//     lineHeight: '19px',
-//     color: '#000000',
-//   };
-
-//   const dateStyle = {
-//     position: 'absolute',
-//     right: '11.83%',
-//     top: '13.5%',
-//     fontFamily: 'Jalnan, sans-serif',
-//     fontSize: '16px',
-//     lineHeight: '19px',
-//     color: '#000000',
-//   };
-
-//   const titleLineStyle = {
-//     position: 'absolute',
-//     left: '8.58%',
-//     right: '10.65%',
-//     top: '28.09%',
-//     border: '1px solid #F1F1F1',
-//   };
-
-//   const postTitleStyle = {
-//     position: 'absolute',
-//     left: '8.58%',
-//     top: '21.98%',
-//     fontFamily: 'Jalnan, sans-serif',
-//     fontSize: '20px',
-//     lineHeight: '24px',
-//     color: '#000000',
-//   };
-
-//   const contentStyle = {
-//     position: 'absolute',
-//     left: '8.58%',
-//     right: '11.83%',
-//     top: '32.06%',
-//     height: '200px',
-//     overflowY: 'auto',
-//     fontFamily: 'Noto Sans KR, sans-serif',
-//     fontSize: '16px',
-//     lineHeight: '23px',
-//     color: '#000000',
-//   };
-
-//   const contentLineStyle = {
-//     position: 'absolute',
-//     left: '8.58%',
-//     right: '10.65%',
-//     top: '66.11%',
-//     border: '1px solid #F1F1F1',
-//   };
-
-//   const joinButtonStyle = {
-//     position: 'absolute',
-//     left: '50%',
-//     transform: 'translateX(-50%)',
-//     top: '67.94%',
-//     padding: '7px 15px',
-//     background: currentParticipants === maxParticipants ? '#FFFFFF' : '#022DA6',
-//     borderRadius: '10px',
-//     fontFamily: 'Jalnan, sans-serif',
-//     fontSize: '12px',
-//     color: currentParticipants === maxParticipants ? '#022DA6' : '#FFFFFF',
-//     border:
-//       currentParticipants === maxParticipants ? '1px solid #022DA6' : 'none',
-//     cursor: currentParticipants === maxParticipants ? 'default' : 'pointer',
-//     minWidth: '80px',
-//   };
-
-//   const participantsStyle = {
-//     position: 'absolute',
-//     left: '50%',
-//     top: '75.73%',
-//     transform: 'translateX(-50%)', // 가운데 정렬
-//     fontFamily: 'Jalnan, sans-serif',
-//     fontSize: '16px',
-//     color: '#000000',
-//     textAlign: 'center',
-//     whiteSpace: 'nowrap', // 텍스트가 한 줄에 나오도록 설정
-//   };
-
-//   const tagStyle = {
-//     padding: '2px 13px',
-//     background: '#FFFFFF',
-//     border: '1.5px solid #022DA6',
-//     borderRadius: '10px',
-//     fontFamily: 'Jalnan, sans-serif',
-//     fontSize: '12px',
-//     color: '#000000',
-//   };
-
-//   return (
-//     <div style={modalOverlayStyle} onClick={onHide}>
-//       <div style={modalStyle} onClick={(e) => e.stopPropagation()}>
-//         <button style={closeButtonStyle} onClick={onHide} aria-label="닫기">
-//           &times;
-//         </button>
-//         <h5 style={titleStyle}>밥메이트</h5>
-//         <img src={profileImage} alt="프로필 이미지" style={profileImageStyle} />
-
-//         <span style={authorStyle}>
-//           {post.isAnonymous == true ? '익명' : post.author}{' '}
-//         </span>
-
-//         <span style={dateStyle}>{post.date}</span>
-//         <div style={titleLineStyle}></div>
-//         <h5 style={postTitleStyle}>{post.title}</h5>
-//         <div style={contentStyle}>
-//           <p>
-//             오늘 점심 맛보래 가서 점심 아무거나 드실 3분 구합니다. 김치두루치기
-//             2인에 다가 제육 하나 시켜서 나눠먹어요 ~~
-//           </p>
-//         </div>
-//         <div style={contentLineStyle}></div>
-//         <button
-//           style={joinButtonStyle}
-//           onClick={handleJoinClick}
-//           disabled={currentParticipants === maxParticipants}
-//         >
-//           {currentParticipants === maxParticipants
-//             ? '마감됨'
-//             : isParticipating
-//             ? '참여취소'
-//             : '참여하기'}
-//         </button>
-//         <p style={participantsStyle}>
-//           현재 참여 인원:{' '}
-//           <span style={{ color: '#022DA6' }}>{currentParticipants}명</span>/
-//           {maxParticipants}명
-//         </p>
-//         <span
-//           style={{
-//             display: 'flex',
-//             position: 'relative',
-//             top: '80%',
-//             justifyContent: 'center',
-//           }}
-//         >
-//           {post.isAnonymous == true ? (
-//             <span></span>
-//           ) : (
-//             <div
-//               style={{
-//                 display: 'flex',
-//                 flexWrap: 'wrap',
-//                 flexDirection: 'row',
-//                 gap: '10px',
-//                 height: '25px',
-//                 width: '65%',
-//               }}
-//             >
-//               {post.participate.map((participant) => {
-//                 return (
-//                   <div style={tagStyle} key={participant}>
-//                     {participant}
-//                   </div>
-//                 );
-//               })}
-//             </div>
-//           )}
-//         </span>
-//         {/* <span style={{ ...tagStyle, left: '21.89%', top: '80%' }}>문종근</span>
-//         <span style={{ ...tagStyle, left: '43.49%', top: '80%' }}>이유진</span> */}
-//       </div>
-//     </div>
-//   );
-// }
-
-// export default DetailModal;
-
 import React, { useState, useEffect } from 'react';
 import profileImage from '../../assets/profileImage.png';
 import './index.css';
+import { useLogin } from '../../lib/hooks/useLogin';
 
 function DetailModal({ postId, show, onHide }) {
+  const { loggedIn } = useLogin();
+  console.log(loggedIn);
   const [post, setPost] = useState(null);
   const [isParticipating, setIsParticipating] = useState(false);
   const [currentParticipants, setCurrentParticipants] = useState(0);
@@ -289,13 +32,50 @@ function DetailModal({ postId, show, onHide }) {
 
   const handleJoinClick = () => {
     if (isParticipating) {
-      setIsParticipating(false);
-      setCurrentParticipants(currentParticipants - 1);
+      // 참여 취소 요청
+      fetch(`http://localhost:3000/api/board/party/${boardId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: { name: loggedIn.name }, // 현재 로그인한 사용자 이름 추가
+        credentials: 'include',
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setIsParticipating(false);
+          setCurrentParticipants(currentParticipants - 1);
+          console.log(data.message);
+        })
+        .catch((error) => console.error('Error cancelling participation:', error));
     } else if (currentParticipants < maxParticipants) {
-      setIsParticipating(true);
-      setCurrentParticipants(currentParticipants + 1);
+      // 참여 요청
+      fetch(`http://localhost:3000/api/board/party/${postId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body:JSON.stringify({ name: loggedIn.name }), // 현재 로그인한 사용자 이름 추가
+        credentials: 'include',
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setIsParticipating(true);
+          setCurrentParticipants(currentParticipants + 1);
+          console.log(data.message);
+        })
+        .catch((error) => console.error('Error joining:', error));
     }
   };
+
+
+  // createdAt 날짜 형식을 "YY.MM.DD"로 변환
+  const formattedDate = post.createdAt
+    ? post.createdAt.slice(2, 4) + '.' + post.createdAt.slice(5, 7) + '.' + post.createdAt.slice(8, 10)
+    : '';
+
+  // 카테고리 제목 설정
+  const categoryTitle = post.isAnonymous ? '익명메이트' : '밥메이트';
 
   const modalOverlayStyle = {
     position: 'fixed',
@@ -312,12 +92,14 @@ function DetailModal({ postId, show, onHide }) {
 
   const modalStyle = {
     position: 'relative',
-    width: '338px',
-    height: '80vh',
+    width: '25%',
+    height: '80%',
+    maxWidth: '500px',
     background: '#FFFFFF',
     border: '3px solid #000000',
     borderRadius: '15px',
     boxSizing: 'border-box',
+    padding: '20px',
   };
 
   const closeButtonStyle = {
@@ -334,90 +116,76 @@ function DetailModal({ postId, show, onHide }) {
   };
 
   const titleStyle = {
-    position: 'absolute',
-    left: '0',
-    right: '0',
-    top: '3.51%',
+    textAlign: 'center',
     fontFamily: 'Jalnan, sans-serif',
     fontSize: '20px',
     lineHeight: '24px',
     color: '#000000',
-    textAlign: 'center',
+    marginBottom: '20px',
+  };
+
+  const profileContainerStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between', // 양쪽 정렬
+    marginBottom: '10px',
   };
 
   const profileImageStyle = {
-    position: 'absolute',
-    left: '5.62%',
-    top: '10.84%',
-    width: '14.5%',
-    height: 'auto',
-    borderRadius: '90px',
+    width: '50px',
+    height: '50px',
+    borderRadius: '25px',
+  };
+
+  const authorDateContainerStyle = {
+    display: 'flex',
+    justifyContent: 'space-between',
+    width: '100%',
   };
 
   const authorStyle = {
-    position: 'absolute',
-    left: '22%',
-    top: '13.5%',
+    paddingLeft: '10px',
     fontFamily: 'Jalnan, sans-serif',
-    fontSize: '16px',
-    lineHeight: '19px',
+    fontSize: '14px',
     color: '#000000',
   };
 
   const dateStyle = {
-    position: 'absolute',
-    right: '11.83%',
-    top: '13.5%',
     fontFamily: 'Jalnan, sans-serif',
-    fontSize: '16px',
-    lineHeight: '19px',
+    fontSize: '14px',
     color: '#000000',
-  };
-
-  const titleLineStyle = {
-    position: 'absolute',
-    left: '8.58%',
-    right: '10.65%',
-    top: '28.09%',
-    border: '1px solid #F1F1F1',
+    textAlign: 'right', // 오른쪽 정렬
   };
 
   const postTitleStyle = {
-    position: 'absolute',
-    left: '8.58%',
-    top: '21.98%',
     fontFamily: 'Jalnan, sans-serif',
-    fontSize: '20px',
-    lineHeight: '24px',
+    fontSize: '18px',
     color: '#000000',
+    marginTop: '20px',
+    marginBottom: '10px',
   };
 
   const contentStyle = {
-    position: 'absolute',
-    left: '8.58%',
-    right: '11.83%',
-    top: '32.06%',
-    height: '200px',
+    minHeight: '200px', // 최소 높이 설정
+    maxHeight: '200px',
     overflowY: 'auto',
     fontFamily: 'Noto Sans KR, sans-serif',
-    fontSize: '16px',
-    lineHeight: '23px',
+    fontSize: '14px',
     color: '#000000',
+    marginTop: '20px',
+    marginBottom: '10px',
   };
 
-  const contentLineStyle = {
-    position: 'absolute',
-    left: '8.58%',
-    right: '10.65%',
-    top: '66.11%',
-    border: '1px solid #F1F1F1',
+  const separatorStyle = {
+    width: '100%',
+    height: '1px',
+    backgroundColor: '#E5E5E5',
+    margin: '10px 0',
   };
 
   const joinButtonStyle = {
-    position: 'absolute',
-    left: '50%',
-    transform: 'translateX(-50%)',
-    top: '67.94%',
+    display: 'block',
+    margin: '20px auto',
     padding: '7px 15px',
     background: currentParticipants === maxParticipants ? '#FFFFFF' : '#022DA6',
     borderRadius: '10px',
@@ -431,15 +199,19 @@ function DetailModal({ postId, show, onHide }) {
   };
 
   const participantsStyle = {
-    position: 'absolute',
-    left: '50%',
-    top: '75.73%',
-    transform: 'translateX(-50%)',
-    fontFamily: 'Jalnan, sans-serif',
-    fontSize: '16px',
-    color: '#000000',
     textAlign: 'center',
-    whiteSpace: 'nowrap',
+    fontFamily: 'Jalnan, sans-serif',
+    fontSize: '14px',
+    color: '#000000',
+    marginBottom: '10px',
+  };
+
+  const tagContainerStyle = {
+    display: 'flex',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    gap: '10px',
+    marginTop: '10px',
   };
 
   const tagStyle = {
@@ -458,20 +230,25 @@ function DetailModal({ postId, show, onHide }) {
         <button style={closeButtonStyle} onClick={onHide} aria-label="닫기">
           &times;
         </button>
-        <h5 style={titleStyle}>{post.category || '게시글'}</h5>
-        <img src={profileImage} alt="프로필 이미지" style={profileImageStyle} />
+        <h5 style={titleStyle}>{categoryTitle}</h5>
 
-        <span style={authorStyle}>
-          {post.isAnonymous ? '익명' : post.name}
-        </span>
+        <div style={profileContainerStyle}>
+          <div>
+            <img src={profileImage} alt="프로필 이미지" style={profileImageStyle} />
+            <span style={authorStyle}>{post.isAnonymous ? '익명' : post.name}</span>
+          </div>
+          <span style={dateStyle}>{formattedDate}</span> {/* 날짜 오른쪽 정렬 */}
+        </div>
 
-        <span style={dateStyle}>{post.createdAt}</span>
-        <div style={titleLineStyle}></div>
         <h5 style={postTitleStyle}>{post.title}</h5>
+        <div style={separatorStyle}></div>
+
         <div style={contentStyle}>
           <p>{post.content}</p>
         </div>
-        <div style={contentLineStyle}></div>
+
+        <div style={separatorStyle}></div>
+
         <button
           style={joinButtonStyle}
           onClick={handleJoinClick}
@@ -484,18 +261,10 @@ function DetailModal({ postId, show, onHide }) {
               : '참여하기'}
         </button>
         <p style={participantsStyle}>
-          현재 참여 인원:{' '}
-          <span style={{ color: '#022DA6' }}>{currentParticipants}명</span>/
-          {maxParticipants}명
+          현재 참여 인원: <span style={{ color: '#022DA6' }}>{currentParticipants}명</span>/{maxParticipants}명
         </p>
-        <span
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            flexWrap: 'wrap',
-            gap: '10px',
-          }}
-        >
+
+        <div style={tagContainerStyle}>
           {!post.isAnonymous &&
             post.participate &&
             post.participate.map((participant) => (
@@ -503,7 +272,7 @@ function DetailModal({ postId, show, onHide }) {
                 {participant}
               </div>
             ))}
-        </span>
+        </div>
       </div>
     </div>
   );
