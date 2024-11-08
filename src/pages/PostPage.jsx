@@ -2,6 +2,9 @@ import React from 'react';
 import CategoryButton from '../components/post/categoryBoard/CategoryButton';
 import './PostPage.css';
 import { useState } from 'react';
+import axios from 'axios';
+
+import { postBap, postGame } from '../lib/apis/post';
 
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -35,6 +38,22 @@ const TITLE_CATEGORY_LIST = ['밥 메이트', '익명 메이트', '간식 내기
 export default function PostPage() {
   const [selectedCategory, setSelectedCategory] = useState('밥 메이트');
   const [selectedFoodCategory, setSelectedFoodCategory] = useState('한식');
+  const [userInputTitle, setUserInputTitle] = useState('');
+  const [userInputContent, setUserInputContent] = useState('');
+  const [userInputTotalCount, setUserInputTotalCount] = useState(0);
+
+
+  // 밥 메이트 선택 후 확인 버튼 클릭 시
+  const babConfirmClick = () => {
+    let isAnonymous = false;
+    if (selectedCategory === '익명 메이트') isAnonymous=true;
+    postBap(userInputTitle, userInputContent, selectedCategory, isAnonymous, userInputTotalCount)
+  };
+
+  // 간식 내기 선택 후 확인 버튼 클릭 시
+  const snackConfirmClick = () => {
+    postGame(userInputTitle, userInputContent, userInputTotalCount);
+  };
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
@@ -63,6 +82,7 @@ export default function PostPage() {
           return (
             <>
               <CategoryButton
+                key={i}
                 text={elem}
                 style={{ width: '137px', height: '44px' }}
                 isSelected={selectedCategory === elem}
@@ -90,6 +110,10 @@ export default function PostPage() {
                 type="text"
                 placeholder="장소, 시간 등을 포함해주세요"
                 autoFocus
+                onChange={(e) => {
+                  setUserInputTitle(e.target.value);
+                  console.log(e.target.value);
+                }}
               />
             </Form.Group>
           </div>
@@ -109,7 +133,7 @@ export default function PostPage() {
                   {CATEGORY_LIST.map((elem, i) => {
                     return (
                       <>
-                        <SwiperSlide>
+                        <SwiperSlide key={i}>
                           <CategoryButton
                             key={i}
                             text={elem}
@@ -139,13 +163,21 @@ export default function PostPage() {
                 as="textarea"
                 rows={5}
                 placeholder="장소, 시간 등을 포함해주세요"
+                onChange={(e) => {
+                  setUserInputContent(e.target.value);
+                  console.log(e.target.value);
+                }}
               />
             </Form.Group>
           </div>
           <div>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>총 인원</Form.Label>
-              <Form.Control type="number" />
+              <Form.Control type="number"
+              onChange={(e) => {
+                setUserInputTotalCount(e.target.value);
+                console.log(e.target.value);
+              }} />
             </Form.Group>
           </div>
           <div
@@ -166,6 +198,11 @@ export default function PostPage() {
                 height: '49px',
                 boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.2)',
               }}
+            onClick={()=> {
+              console.log("asd")
+              babConfirmClick();
+            }}
+            
             >
               <div
                 style={{
@@ -193,6 +230,10 @@ export default function PostPage() {
                 as="input"
                 type="text"
                 placeholder="장소, 시간 등을 포함해주세요"
+                onChange={(e) => {
+                  setUserInputTitle(e.target.value);
+                  console.log(e.target.value);
+                }}
               />
             </Form.Group>
           </div>
@@ -206,13 +247,20 @@ export default function PostPage() {
                 as="textarea"
                 rows={5}
                 placeholder="장소, 시간 등을 포함해주세요"
+                onChange={(e) => {
+                  setUserInputContent(e.target.value);
+                  console.log(e.target.value);
+                }}
               />
             </Form.Group>
           </div>
           <div>
             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
               <Form.Label>총 인원</Form.Label>
-              <Form.Control type="number" />
+              <Form.Control type="number" onChange={(e) => {
+                setUserInputTotalCount(e.target.value);
+                console.log(e.target.value);
+              }} />
             </Form.Group>
           </div>
           <div
@@ -232,6 +280,11 @@ export default function PostPage() {
                 width: '173px',
                 height: '49px',
                 boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.2)',
+              }}
+              onClick={() => {
+                console.log("클릭");
+                
+                snackConfirmClick();
               }}
             >
               <div
