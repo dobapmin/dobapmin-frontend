@@ -35,7 +35,7 @@ export default function Header() {
     >
       <img
         src={mainLogo}
-        style={{ objectFit: 'cover', height: '100%' }}
+        style={{ objectFit: 'cover', height: '100%', cursor: 'pointer' }}
         onClick={handleNavigate}
       />
       <div

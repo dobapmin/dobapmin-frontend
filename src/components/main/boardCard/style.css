@@ -9,7 +9,7 @@
 }
 
 .dm-card-wrapper:hover {
-  transform: translateY(-12px);
+  transform: translateY(-10px);
 }
 
 .dm-card-img-bg {
