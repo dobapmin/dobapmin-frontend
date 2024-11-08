@@ -59,7 +59,8 @@ export default function PostPage() {
     let body = {};
     console.log('name', loggedIn.name);
     if (isGame === true) {
-      baseURL = 'http://54.180.251.176:3000/api/gameBoard';
+      // baseURL = 'http://54.180.251.176:3000/api/gameBoard';
+      baseURL = 'http://localhost:3000/api/gameBoard';
       body = {
         name: loggedIn.name,
         title: title,
@@ -67,7 +68,8 @@ export default function PostPage() {
         totalCount: totalCount,
       };
     } else {
-      baseURL = 'http://54.180.251.176:3000/api/board';
+      // baseURL = 'http://54.180.251.176:3000/api/board';
+      baseURL = 'http://localhost:3000/api/board';
       console.log('this is board', title, content, totalCount);
       body = {
         name: loggedIn.name,

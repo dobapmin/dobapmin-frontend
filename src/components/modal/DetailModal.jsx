@@ -33,7 +33,7 @@ function DetailModal({ postId, show, onHide }) {
   const handleJoinClick = () => {
     if (isParticipating) {
       // 참여 취소 요청
-      fetch(`http://localhost:3000/api/board/party/${boardId}`, {
+      fetch(`http://localhost:3000/api/board/party/${postId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -47,7 +47,9 @@ function DetailModal({ postId, show, onHide }) {
           setCurrentParticipants(currentParticipants - 1);
           console.log(data.message);
         })
-        .catch((error) => console.error('Error cancelling participation:', error));
+        .catch((error) =>
+          console.error('Error cancelling participation:', error)
+        );
     } else if (currentParticipants < maxParticipants) {
       // 참여 요청
       fetch(`http://localhost:3000/api/board/party/${postId}`, {
@@ -55,7 +57,7 @@ function DetailModal({ postId, show, onHide }) {
         headers: {
           'Content-Type': 'application/json',
         },
-        body:JSON.stringify({ name: loggedIn.name }), // 현재 로그인한 사용자 이름 추가
+        body: JSON.stringify({ name: loggedIn.name }), // 현재 로그인한 사용자 이름 추가
         credentials: 'include',
       })
         .then((res) => res.json())
@@ -68,10 +70,13 @@ function DetailModal({ postId, show, onHide }) {
     }
   };
 
-
   // createdAt 날짜 형식을 "YY.MM.DD"로 변환
   const formattedDate = post.createdAt
-    ? post.createdAt.slice(2, 4) + '.' + post.createdAt.slice(5, 7) + '.' + post.createdAt.slice(8, 10)
+    ? post.createdAt.slice(2, 4) +
+      '.' +
+      post.createdAt.slice(5, 7) +
+      '.' +
+      post.createdAt.slice(8, 10)
     : '';
 
   // 카테고리 제목 설정
@@ -234,10 +239,17 @@ function DetailModal({ postId, show, onHide }) {
 
         <div style={profileContainerStyle}>
           <div>
-            <img src={profileImage} alt="프로필 이미지" style={profileImageStyle} />
-            <span style={authorStyle}>{post.isAnonymous ? '익명' : post.name}</span>
+            <img
+              src={profileImage}
+              alt="프로필 이미지"
+              style={profileImageStyle}
+            />
+            <span style={authorStyle}>
+              {post.isAnonymous ? '익명' : post.name}
+            </span>
           </div>
-          <span style={dateStyle}>{formattedDate}</span> {/* 날짜 오른쪽 정렬 */}
+          <span style={dateStyle}>{formattedDate}</span>{' '}
+          {/* 날짜 오른쪽 정렬 */}
         </div>
 
         <h5 style={postTitleStyle}>{post.title}</h5>
@@ -257,11 +269,13 @@ function DetailModal({ postId, show, onHide }) {
           {currentParticipants >= maxParticipants
             ? '마감됨'
             : isParticipating
-              ? '참여취소'
-              : '참여하기'}
+            ? '참여취소'
+            : '참여하기'}
         </button>
         <p style={participantsStyle}>
-          현재 참여 인원: <span style={{ color: '#022DA6' }}>{currentParticipants}명</span>/{maxParticipants}명
+          현재 참여 인원:{' '}
+          <span style={{ color: '#022DA6' }}>{currentParticipants}명</span>/
+          {maxParticipants}명
         </p>
 
         <div style={tagContainerStyle}>

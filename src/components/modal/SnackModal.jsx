@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import profileImage from '../../assets/profileImage.png';
 import './index.css';
+import { useLogin } from '../../lib/hooks/useLogin';
 
 function SnackModal({ postId, show, onHide }) {
   const [post, setPost] = useState(null);
@@ -8,7 +9,7 @@ function SnackModal({ postId, show, onHide }) {
   const [currentParticipants, setCurrentParticipants] = useState(0);
   const [winner, setWinner] = useState(''); // 당첨자 상태 추가
   const [isDrawn, setIsDrawn] = useState(false); // 뽑기 완료 상태 추가
-
+  const { loggedIn } = useLogin();
   // API 요청을 통해 데이터 불러오기
   useEffect(() => {
     if (postId) {
@@ -43,14 +44,19 @@ function SnackModal({ postId, show, onHide }) {
 
   const handleDrawClick = () => {
     if (!isDrawn && post.participate.length > 0) {
-      const randomWinner = post.participate[Math.floor(Math.random() * post.participate.length)];
+      const randomWinner =
+        post.participate[Math.floor(Math.random() * post.participate.length)];
       setWinner(randomWinner);
       setIsDrawn(true);
     }
   };
 
   const formattedDate = post.createdAt
-    ? post.createdAt.slice(2, 4) + '.' + post.createdAt.slice(5, 7) + '.' + post.createdAt.slice(8, 10)
+    ? post.createdAt.slice(2, 4) +
+      '.' +
+      post.createdAt.slice(5, 7) +
+      '.' +
+      post.createdAt.slice(8, 10)
     : '';
 
   const categoryTitle = '간식 내기';
@@ -113,10 +119,10 @@ function SnackModal({ postId, show, onHide }) {
     width: '50px',
     height: '50px',
     borderRadius: '25px',
-    };
+  };
 
   const authorStyle = {
-    paddingLeft: '10px',  
+    paddingLeft: '10px',
     fontFamily: 'Jalnan, sans-serif',
     fontSize: '14px',
     color: '#000000',
@@ -177,7 +183,7 @@ function SnackModal({ postId, show, onHide }) {
     height: '170px',
     width: '310px',
     border: '1.5px solid #474747',
-    borderRadius: '16px'
+    borderRadius: '16px',
   };
 
   const participantsStyle = {
@@ -223,7 +229,11 @@ function SnackModal({ postId, show, onHide }) {
 
         <div style={profileContainerStyle}>
           <div>
-            <img src={profileImage} alt="프로필 이미지" style={profileImageStyle} />
+            <img
+              src={profileImage}
+              alt="프로필 이미지"
+              style={profileImageStyle}
+            />
             <span style={authorStyle}>{post.name}</span>
           </div>
           <span style={dateStyle}>{formattedDate}</span>
@@ -234,7 +244,9 @@ function SnackModal({ postId, show, onHide }) {
 
         <div style={contentStyle}>
           {isDrawn ? (
-            <p style={winnerStyle}>당첨자: {winner} <br></br> 🎉🎊🎉</p>
+            <p style={winnerStyle}>
+              당첨자: {winner} <br></br> 🎉🎊🎉
+            </p>
           ) : (
             <p>{post.content}</p>
           )}
@@ -249,10 +261,16 @@ function SnackModal({ postId, show, onHide }) {
               onClick={handleJoinClick}
               disabled={currentParticipants >= maxParticipants}
             >
-              {currentParticipants >= maxParticipants ? '마감됨' : isParticipating ? '참여취소' : '참여하기'}
+              {currentParticipants >= maxParticipants
+                ? '마감됨'
+                : isParticipating
+                ? '참여취소'
+                : '참여하기'}
             </button>
             <p style={participantsStyle}>
-              현재 참여 인원: <span style={{ color: '#022DA6' }}>{currentParticipants}명</span>/{maxParticipants}명
+              현재 참여 인원:{' '}
+              <span style={{ color: '#022DA6' }}>{currentParticipants}명</span>/
+              {maxParticipants}명
             </p>
             <button
               style={buttonStyle}
@@ -270,7 +288,13 @@ function SnackModal({ postId, show, onHide }) {
             </div>
           </>
         ) : (
-          <button style={{ ...disabledButtonStyle, fontSize: '18px', padding: '15px 30px' }}>
+          <button
+            style={{
+              ...disabledButtonStyle,
+              fontSize: '18px',
+              padding: '15px 30px',
+            }}
+          >
             마감되었습니다
           </button>
         )}
