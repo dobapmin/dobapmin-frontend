@@ -47,31 +47,6 @@ export default function BoardList(props) {
               </div>
             </>
           )}
-
-          {/* <SwiperSlide style={{ padding: '10px 0px' }}>
-            <BoardCard />
-          </SwiperSlide>
-          <SwiperSlide style={{ padding: '10px 0px' }}>
-            <BoardCard />
-          </SwiperSlide>
-          <SwiperSlide style={{ padding: '10px' }}>
-            <BoardCard />
-          </SwiperSlide>
-          <SwiperSlide style={{ padding: '10px 0px' }}>
-            <BoardCard />
-          </SwiperSlide>
-          <SwiperSlide style={{ padding: '10px 0px' }}>
-            <BoardCard />
-          </SwiperSlide>
-          <SwiperSlide style={{ padding: '10px' }}>
-            <BoardCard />
-          </SwiperSlide>
-          <SwiperSlide style={{ padding: '10px 0px' }}>
-            <BoardCard />
-          </SwiperSlide>
-          <SwiperSlide style={{ padding: '10px 0px' }}>
-            <BoardCard />
-          </SwiperSlide> */}
         </Swiper>
       </div>
     </div>
