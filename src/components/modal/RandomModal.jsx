@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import profileImage from '../../assets/profileImage.png';
 import './index.css';
 
-function DetailModal({ post, show, onHide }) {
+function RandomModal({ post, show, onHide }) {
   if (!show) return null;
+
   const [isParticipating, setIsParticipating] = useState(false);
   const [currentParticipants, setCurrentParticipants] = useState(13); // 현재 참여 인원
   const maxParticipants = 15; // 총 인원
@@ -170,6 +171,9 @@ function DetailModal({ post, show, onHide }) {
   };
 
   const tagStyle = {
+    position: 'absolute',
+    left: '21.89%',
+    top: '80.69%',
     padding: '2px 13px',
     background: '#FFFFFF',
     border: '1.5px solid #022DA6',
@@ -187,11 +191,7 @@ function DetailModal({ post, show, onHide }) {
         </button>
         <h5 style={titleStyle}>밥메이트</h5>
         <img src={profileImage} alt="프로필 이미지" style={profileImageStyle} />
-
-        <span style={authorStyle}>
-          {post.isAnonymous == true ? '익명' : post.author}{' '}
-        </span>
-
+        <span style={authorStyle}>{post.author}</span>
         <span style={dateStyle}>{post.date}</span>
         <div style={titleLineStyle}></div>
         <h5 style={postTitleStyle}>{post.title}</h5>
@@ -218,42 +218,11 @@ function DetailModal({ post, show, onHide }) {
           <span style={{ color: '#022DA6' }}>{currentParticipants}명</span>/
           {maxParticipants}명
         </p>
-        <span
-          style={{
-            display: 'flex',
-            position: 'relative',
-            top: '80%',
-            justifyContent: 'center',
-          }}
-        >
-          {post.isAnonymous == true ? (
-            <span></span>
-          ) : (
-            <div
-              style={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                flexDirection: 'row',
-                gap: '10px',
-                height: '25px',
-                width: '65%',
-              }}
-            >
-              {post.participate.map((participant) => {
-                return (
-                  <div style={tagStyle} key={participant}>
-                    {participant}
-                  </div>
-                );
-              })}
-            </div>
-          )}
-        </span>
-        {/* <span style={{ ...tagStyle, left: '21.89%', top: '80%' }}>문종근</span>
-        <span style={{ ...tagStyle, left: '43.49%', top: '80%' }}>이유진</span> */}
+        <span style={{ ...tagStyle, left: '21.89%', top: '80%' }}>문종근</span>
+        <span style={{ ...tagStyle, left: '43.49%', top: '80%' }}>이유진</span>
       </div>
     </div>
   );
 }
 
-export default DetailModal;
+export default RandomModal;
