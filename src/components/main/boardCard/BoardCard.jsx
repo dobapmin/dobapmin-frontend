@@ -11,6 +11,11 @@ import FoodETC from '../../../assets/food_category/etc.png';
 import Game from '../../../assets/food_category/game.png';
 import UserImg from '../../../assets/userImg.png';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import SnackModal from '../../modal/SnackModal';
+import DetailModal from '../../modal/DetailModal';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 
 export default function BoardCard({ data, onClick }) { // 바뀐 부분: onClick prop 추가
   let CardImg = FoodETC;
@@ -60,13 +65,41 @@ export default function BoardCard({ data, onClick }) { // 바뀐 부분: onClick
       CardImg = Game;
       CardColor = '#000';
   }
+  const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
+  const [isSnackModalOpen, setIsSnackModalOpen] = useState(false);
+  const [selectedPost, setSelectedPost] = useState(null);
+  const [modalOption, setModalOption] = useState();
+  const navigate = useNavigate();
+
+  const handlePostClick = (post) => {
+    if (!post.category) {
+      setIsSnackModalOpen(true);
+    } else {
+      setSelectedPost(post);
+
+      setIsDetailModalOpen(true);
+      navigate(`/main/${post._id}`);
+    }
+  };
+
+  const handleCloseModal = () => {
+    setIsDetailModalOpen(false);
+    setIsSnackModalOpen(false);
+    setSelectedPost(null);
+    navigate('/');
+  };
+  const [show, setShow] = useState(false);
+
+  const handleShow = (e) => {
+    setShow(true);
+    console.log('click');
+  };
 
   return (
     <div className="dm-card-wrapper" onClick={onClick}> {/* 바뀐 부분: onClick 속성 추가 */}
       {data.isEnd ? (
         <div className="dm-card-end">마감되었습니다.</div>
       ) : null}
-
       <div className="dm-card-img-bg" style={{ backgroundColor: CardColor }}>
         {!data.winner && (
           <div className="dm-card-food-category">{data.category}</div>
@@ -95,6 +128,26 @@ export default function BoardCard({ data, onClick }) { // 바뀐 부분: onClick
           <div className="dm-card-content-bottom-date">{data.createdAt}</div>
         </div>
       </div>
+      {data.category ? (
+        <>
+          <DetailModal
+            show={show}
+            post={data}
+            setShow={setShow}
+            // post={selectedPost}
+            //  show={isDetailModalOpen}
+            // onHide={handleClose}
+          />
+        </>
+      ) : (
+        <SnackModal
+          post={data}
+          show={show}
+          setShow={setShow}
+          // showOption={isSnackModalOpen}
+          // onHide={handleClose}
+        />
+      )}
     </div>
   );
 }
