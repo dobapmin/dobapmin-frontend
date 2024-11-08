@@ -228,7 +228,7 @@ function SnackModal({ postId, show, onHide }) {
         </>
       )}
 
-      <div style={modalStyle} onClick={(e) => e.stopPropagation()}>
+      <div className="modalStyle" onClick={(e) => e.stopPropagation()}>
         <button style={closeButtonStyle} onClick={onHide} aria-label="닫기">
           &times;
         </button>
