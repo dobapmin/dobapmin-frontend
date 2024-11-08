@@ -70,7 +70,7 @@ export default function BoardCard({ data }) {
       ) : null}
 
       <div className="dm-card-img-bg" style={{ backgroundColor: CardColor }}>
-        {!data.winner && (
+        {!data.winner && data.winner !== '' && (
           <div className="dm-card-food-category">{data.category}</div>
         )}
 
