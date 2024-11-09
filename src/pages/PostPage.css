@@ -3,6 +3,7 @@
   max-width: 480px;
   min-width: 480px;
     margin: 0 auto;
+    padding-bottom: 50px;
 }
 
 .mb-3 textarea::placeholder{

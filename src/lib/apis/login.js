@@ -6,7 +6,8 @@ export async function postLogout() {
       headers: {
         "Content-Type": "application/json",
       },
-    });
+    }, {withCredentials: true});
+
   } catch (err) {
     return err;
   }
@@ -18,8 +19,10 @@ export const postLogin = async (nickname) => {
       nickname: nickname,
       headers: {
         "Content-Type": "application/json",
+        
       },
-    });
+
+    }, {withCredentials: true});
     return res.data;
   } catch (err) {
     return "";
