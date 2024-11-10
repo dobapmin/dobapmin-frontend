@@ -58,14 +58,53 @@ function SnackModal({
   const maxParticipants = post.totalCount || 0;
 
   const handleJoinClick = () => {
+    // if (isParticipating) {
+    //   if (post.name === loggedIn.name) return window.alert("글 작성자는 취소할 수 없습니다. 😭");
+    //   setIsParticipating(false);
+    //   setCurrentParticipants(currentParticipants - 1);
+    // } else if (currentParticipants < maxParticipants) {
+    //   setIsParticipating(true);
+    //   setCurrentParticipants(currentParticipants + 1);
+    // }
     if (isParticipating) {
-      if (post.name === loggedIn.name)
-        return window.alert('글 작성자는 취소할 수 없습니다. 😭');
-      setIsParticipating(false);
-      setCurrentParticipants(currentParticipants - 1);
+
+      if (post.name === loggedIn.name) return window.alert("글 작성자는 취소할 수 없습니다. 😭");
+      // 참여 취소 요청
+      fetch(`http://localhost:3000/api/gameBoard/party/${postId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name: loggedIn.name }), // 현재 로그인한 사용자 이름 추가
+        credentials: 'include',
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setIsParticipating(false);
+          setCurrentParticipants(currentParticipants - 1);
+          console.log(data.message);
+        })
+        .catch((error) =>
+          console.error('Error cancelling participation:', error)
+        );
+
     } else if (currentParticipants < maxParticipants) {
-      setIsParticipating(true);
-      setCurrentParticipants(currentParticipants + 1);
+      // 참여 요청
+      fetch(`http://localhost:3000/api/gameBoard/party/${postId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name: loggedIn.name }), // 현재 로그인한 사용자 이름 추가
+        credentials: 'include',
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setIsParticipating(true);
+          setCurrentParticipants(currentParticipants + 1);
+          console.log(data.message);
+        })
+        .catch((error) => console.error('Error joining:', error));
     }
   };
 
