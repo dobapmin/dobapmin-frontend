@@ -14,9 +14,13 @@ export default function MainPage() {
   const [selectedPostId, setSelectedPostId] = useState(null);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
   const [isSnackModalOpen, setIsSnackModalOpen] = useState(false);
-  const [isParticipating, setIsParticipating] = useState(false);
+  const [isParticipatingRendering, setIsParticipatingRendering] =
+    useState(false);
+
+  useState(false);
   const { loggedIn } = useLogin();
 
+  // 게시글 조회 GET
   useEffect(() => {
     fetchMainData().then((data) => {
       const reversedBoards = [...data.boards].reverse();
@@ -39,7 +43,7 @@ export default function MainPage() {
       );
       setEndList([...endedBoards, ...endedGameBoards]);
     });
-  }, [loggedIn, isParticipating]);
+  }, [loggedIn, isParticipatingRendering]);
 
   const handlePostClick = (post) => {
     setSelectedPostId(post._id);
@@ -95,8 +99,8 @@ export default function MainPage() {
           postId={selectedPostId}
           show={isDetailModalOpen}
           onHide={handleCloseModal}
-          isParticipating={isParticipating}
-          setIsParticipating={setIsParticipating}
+          isParticipatingRendering={isParticipatingRendering}
+          setIsParticipatingRendering={setIsParticipatingRendering}
         />
       )}
 
@@ -106,8 +110,8 @@ export default function MainPage() {
           postId={selectedPostId}
           show={isSnackModalOpen}
           onHide={handleCloseModal}
-          isParticipating={isParticipating}
-          setIsParticipating={setIsParticipating}
+          isParticipatingRendering={isParticipatingRendering}
+          setIsParticipatingRendering={setIsParticipatingRendering}
         />
       )}
     </div>
