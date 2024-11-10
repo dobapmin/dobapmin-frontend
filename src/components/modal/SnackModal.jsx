@@ -34,16 +34,24 @@ function SnackModal({
           setIsDrawn(data.winner || false); // 기존에 마감 상태면 표시
 
           // 해당 글에 자신이 참여중인지 확인 후 반영
-          for (let i = 0; i < data.participate.length; i++) {
-            if (loggedIn.name === data.participate[i]) {
-              setIsParticipating(true);
-              break;
-            }
-          }
+          // for (let i = 0; i < data.participate.length; i++) {
+          //   if (loggedIn.name === data.participate[i]) {
+          //     setIsParticipating(true);
+          //     console.log(
+          //       '참가중?????',
+          //       data.participate[i],
+          //       'login정보',
+          //       loggedIn.name
+          //     );
+          //     break;
+          //   }
+          // }
+          const isUserParticipating = data.participate.includes(loggedIn.name);
+          setIsParticipating(isUserParticipating);
         })
         .catch((error) => console.error('Error fetching data:', error));
     }
-  }, [postId, isParticipating]);
+  }, [postId]);
 
   if (!show || !post) return null;
 
@@ -51,7 +59,8 @@ function SnackModal({
 
   const handleJoinClick = () => {
     if (isParticipating) {
-      if (post.name === loggedIn.name) return window.alert("글 작성자는 취소할 수 없습니다. 😭");
+      if (post.name === loggedIn.name)
+        return window.alert('글 작성자는 취소할 수 없습니다. 😭');
       setIsParticipating(false);
       setCurrentParticipants(currentParticipants - 1);
     } else if (currentParticipants < maxParticipants) {
@@ -172,8 +181,8 @@ function SnackModal({
   };
 
   const contentStyle = {
-    minHeight: '180px',
-    maxHeight: '180px',
+    minHeight: '150px',
+    maxHeight: '150px',
     overflowY: 'auto',
     fontFamily: 'Noto Sans KR, sans-serif',
     fontSize: isDrawn ? '30px' : '14px',
@@ -209,7 +218,12 @@ function SnackModal({
     margin: '20px auto',
     padding: '7px 15px',
     // background: currentParticipants === maxParticipants ? '#FFFFFF' : '#022DA6',
-    background: currentParticipants >= maxParticipants ? '#FFFFFF' : isParticipating ? '#E24444' : '#022DA6',
+    background:
+      currentParticipants >= maxParticipants
+        ? '#FFFFFF'
+        : isParticipating
+        ? '#E24444'
+        : '#022DA6',
     borderRadius: '10px',
     fontFamily: 'Jalnan, sans-serif',
     fontSize: '12px',
@@ -224,8 +238,8 @@ function SnackModal({
     ...buttonStyle,
     background: '#474747',
     cursor: 'not-allowed',
-    height: '27%',
-    width: '95%',
+    height: '33%',
+    width: '100%',
     border: 'none',
     borderRadius: '16px',
   };
@@ -324,21 +338,27 @@ function SnackModal({
               {/* 1. 마감된 경우(post.isEnd == true): 마감됨
               2. 마감되지 않음(post.isEnd == false), 내가 포함됨: 참여취소
               3. 마감되지 않음(post.isEnd == false), 내가 포함되지 않음: 참여하기 */}
-              {currentParticipants >= maxParticipants ? '마감됨' : isParticipating ? '참여취소' : '참여하기'}
-
+              {currentParticipants >= maxParticipants
+                ? '마감됨'
+                : isParticipating
+                ? '참여취소'
+                : '참여하기'}
             </button>
             <p style={participantsStyle}>
               현재 참여 인원:{' '}
               <span style={{ color: '#022DA6' }}>{currentParticipants}명</span>/
               {maxParticipants}명
             </p>
-            <button
-              style={buttonStyle}
-              onClick={handleDrawClick}
-              disabled={isDrawn}
-            >
-              뽑기 시작
-            </button>
+            {post.name === loggedIn.name ? (
+              <button
+                style={buttonStyle}
+                onClick={handleDrawClick}
+                disabled={isDrawn}
+              >
+                뽑기 시작
+              </button>
+            ) : null}
+
             <div style={tagContainerStyle}>
               {post.participate.map((participant) => (
                 <div style={tagStyle} key={participant}>
