@@ -211,26 +211,17 @@ function DetailModal({ postId, show, onHide }) {
     marginBottom: '10px',
   };
 
-  // const tagContainerStyle = {
-  //   display: 'flex',
-  //   justifyContent: 'center',
-  //   flexWrap: 'wrap',
-  //   gap: '10px',
-  //   marginTop: '10px',
-  // };
-
   const tagContainerStyle = {
     display: 'flex',
-    justifyContent: 'center',
-    flexWrap: 'nowrap', // 가로로 스크롤할 때 flexWrap을 nowrap으로 설정
+    justifyContent: 'flex-start',
+    flexWrap: 'nowrap', 
     gap: '10px',
     marginTop: '10px',
-    overflowX: 'auto', // 가로 스크롤 추가
-    padding: '10px 0', // 스크롤 바가 잘 보이도록 패딩 추가
+    overflowX: 'auto', 
   };
-  
 
   const tagStyle = {
+    display: 'inline-block', 
     padding: '2px 13px',
     background: '#FFFFFF',
     border: '1.5px solid #022DA6',
@@ -238,6 +229,8 @@ function DetailModal({ postId, show, onHide }) {
     fontFamily: 'Jalnan, sans-serif',
     fontSize: '12px',
     color: '#000000',
+    textAlign: 'center',
+    whiteSpace: 'nowrap', 
   };
 
   return (

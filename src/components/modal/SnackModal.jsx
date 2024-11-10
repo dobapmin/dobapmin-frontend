@@ -204,12 +204,11 @@ function SnackModal({ postId, show, onHide }) {
   
   const tagContainerStyle = {
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     flexWrap: 'nowrap', 
     gap: '10px',
     marginTop: '10px',
     overflowX: 'auto', 
-    // padding: '10px 0',
   };
 
   const tagStyle = {
