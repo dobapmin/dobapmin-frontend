@@ -7,13 +7,14 @@ function DetailModal({
   postId,
   show,
   onHide,
-  isParticipating,
-  setIsParticipating,
+  isParticipatingRendering,
+  setIsParticipatingRendering,
 }) {
   const { loggedIn } = useLogin();
   // console.log(loggedIn);
   const [post, setPost] = useState(null);
   const [currentParticipants, setCurrentParticipants] = useState(0);
+  const [isParticipating, setIsParticipating] = useState(false);
 
   // API 요청을 통해 데이터 불러오기
   useEffect(() => {
@@ -31,6 +32,7 @@ function DetailModal({
           for (let i = 0; i < data.participate.length; i++) {
             if (loggedIn.name === data.participate[i]) {
               setIsParticipating(true);
+              setIsParticipatingRendering(!isParticipatingRendering);
               break;
             }
           }
@@ -45,7 +47,8 @@ function DetailModal({
 
   const handleJoinClick = () => {
     if (isParticipating) {
-      if (post.name === loggedIn.name) return window.alert("글 작성자는 취소할 수 없습니다. 😭");
+      if (post.name === loggedIn.name)
+        return window.alert('글 작성자는 취소할 수 없습니다. 😭');
       // 참여 취소 요청
       fetch(`http://localhost:3000/api/board/party/${postId}`, {
         method: 'DELETE',
@@ -58,6 +61,7 @@ function DetailModal({
         .then((res) => res.json())
         .then((data) => {
           setIsParticipating(false);
+          setIsParticipatingRendering(!isParticipatingRendering);
           setCurrentParticipants(currentParticipants - 1);
           // console.log(data.message);
         })
@@ -77,6 +81,7 @@ function DetailModal({
         .then((res) => res.json())
         .then((data) => {
           setIsParticipating(true);
+          setIsParticipatingRendering(!isParticipatingRendering);
           setCurrentParticipants(currentParticipants + 1);
           // console.log(data.message);
         })
@@ -207,7 +212,12 @@ function DetailModal({
     margin: '20px auto',
     padding: '7px 15px',
     // background: currentParticipants === maxParticipants ? '#FFFFFF' : '#022DA6',
-    background: currentParticipants >= maxParticipants ? '#FFFFFF' : isParticipating ? '#E24444' : '#022DA6',
+    background:
+      currentParticipants >= maxParticipants
+        ? '#FFFFFF'
+        : isParticipating
+        ? '#E24444'
+        : '#022DA6',
     borderRadius: '10px',
     fontFamily: 'Jalnan, sans-serif',
     fontSize: '12px',
@@ -285,16 +295,20 @@ function DetailModal({
           onClick={handleJoinClick}
           disabled={currentParticipants >= maxParticipants}
         >
-            {/* {currentParticipants >= maxParticipants
+          {/* {currentParticipants >= maxParticipants
               ? '마감됨'
               : isParticipating
               ? '참여취소'
               : '참여하기'} */}
 
-            {/* 1. 마감된 경우(post.isEnd == true): 마감됨
+          {/* 1. 마감된 경우(post.isEnd == true): 마감됨
             2. 마감되지 않음(post.isEnd == false), 내가 포함됨: 참여취소
             3. 마감되지 않음(post.isEnd == false), 내가 포함되지 않음: 참여하기 */}
-            {currentParticipants >= maxParticipants ? '마감됨' : isParticipating ? '참여취소' : '참여하기'}
+          {currentParticipants >= maxParticipants
+            ? '마감됨'
+            : isParticipating
+            ? '참여취소'
+            : '참여하기'}
         </button>
         <p style={participantsStyle}>
           현재 참여 인원:{' '}

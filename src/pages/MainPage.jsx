@@ -14,29 +14,36 @@ export default function MainPage() {
   const [selectedPostId, setSelectedPostId] = useState(null);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
   const [isSnackModalOpen, setIsSnackModalOpen] = useState(false);
-  const [isParticipating, setIsParticipating] = useState(false);
+  const [isParticipatingRendering, setIsParticipatingRendering] =
+    useState(false);
+
+  useState(false);
   const { loggedIn } = useLogin();
 
+  // 게시글 조회 GET
   useEffect(() => {
     fetchMainData().then((data) => {
-      setBoardList(data.boards);
-      setGameBoardList(data.gameBoards);
+      const reversedBoards = [...data.boards].reverse();
+      const reversedGameBoards = [...data.gameBoards].reverse();
 
-      const myBoards = data.boards.filter((board) =>
+      setBoardList(reversedBoards);
+      setGameBoardList(reversedGameBoards);
+
+      const myBoards = reversedBoards.filter((board) =>
         board.participate.includes(loggedIn?.name)
       );
-      const myGameBoards = data.gameBoards.filter((gameBoard) =>
+      const myGameBoards = reversedGameBoards.filter((gameBoard) =>
         gameBoard.participate.includes(loggedIn?.name)
       );
       setMyList([...myBoards, ...myGameBoards]);
 
-      const endedBoards = data.boards.filter((board) => board.isEnd);
-      const endedGameBoards = data.gameBoards.filter(
+      const endedBoards = reversedBoards.filter((board) => board.isEnd);
+      const endedGameBoards = reversedGameBoards.filter(
         (gameBoard) => gameBoard.isEnd
       );
       setEndList([...endedBoards, ...endedGameBoards]);
     });
-  }, [loggedIn, isParticipating]);
+  }, [loggedIn, isParticipatingRendering]);
 
   const handlePostClick = (post) => {
     setSelectedPostId(post._id);
@@ -92,8 +99,8 @@ export default function MainPage() {
           postId={selectedPostId}
           show={isDetailModalOpen}
           onHide={handleCloseModal}
-          isParticipating={isParticipating}
-          setIsParticipating={setIsParticipating}
+          isParticipatingRendering={isParticipatingRendering}
+          setIsParticipatingRendering={setIsParticipatingRendering}
         />
       )}
 
@@ -103,8 +110,8 @@ export default function MainPage() {
           postId={selectedPostId}
           show={isSnackModalOpen}
           onHide={handleCloseModal}
-          isParticipating={isParticipating}
-          setIsParticipating={setIsParticipating}
+          isParticipatingRendering={isParticipatingRendering}
+          setIsParticipatingRendering={setIsParticipatingRendering}
         />
       )}
     </div>

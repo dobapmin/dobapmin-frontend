@@ -9,14 +9,15 @@ function SnackModal({
   postId,
   show,
   onHide,
-  isParticipating,
-  setIsParticipating,
+  isParticipatingRendering,
+  setIsParticipatingRendering,
 }) {
   const [post, setPost] = useState(null);
   const [currentParticipants, setCurrentParticipants] = useState(0);
   const [winner, setWinner] = useState(''); // 당첨자 상태 추가
   const [isDrawn, setIsDrawn] = useState(false); // 뽑기 완료 상태 추가
   const { loggedIn } = useLogin();
+  const [isParticipating, setIsParticipating] = useState(false);
   // API 요청을 통해 데이터 불러오기
   useEffect(() => {
     if (postId) {
@@ -81,6 +82,7 @@ function SnackModal({
         .then((res) => res.json())
         .then((data) => {
           setIsParticipating(false);
+          setIsParticipatingRendering(!isParticipatingRendering);
           setCurrentParticipants(currentParticipants - 1);
           setPost((prevPost) => ({
             ...prevPost,
@@ -107,6 +109,7 @@ function SnackModal({
         .then((res) => res.json())
         .then((data) => {
           setIsParticipating(true);
+          setIsParticipatingRendering(!isParticipatingRendering);
           setCurrentParticipants(currentParticipants + 1);
           setPost((prevPost) => ({
             ...prevPost,
