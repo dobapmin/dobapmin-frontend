@@ -26,6 +26,14 @@ function DetailModal({
         .then((data) => {
           setPost(data);
           setCurrentParticipants(data.currentCount || 0);
+
+          // 해당 글에 자신이 참여중인지 확인 후 반영
+          for (let i = 0; i < data.participate.length; i++) {
+            if (loggedIn.name === data.participate[i]) {
+              setIsParticipating(true);
+              break;
+            }
+          }
         })
         .catch((error) => console.error('Error fetching data:', error));
     }
@@ -37,13 +45,14 @@ function DetailModal({
 
   const handleJoinClick = () => {
     if (isParticipating) {
+      if (post.name === loggedIn.name) return window.alert("글 작성자는 취소할 수 없습니다. 😭");
       // 참여 취소 요청
       fetch(`http://localhost:3000/api/board/party/${postId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: { name: loggedIn.name }, // 현재 로그인한 사용자 이름 추가
+        body: JSON.stringify({ name: loggedIn.name }), // 현재 로그인한 사용자 이름 추가
         credentials: 'include',
       })
         .then((res) => res.json())
@@ -197,7 +206,8 @@ function DetailModal({
     display: 'block',
     margin: '20px auto',
     padding: '7px 15px',
-    background: currentParticipants === maxParticipants ? '#FFFFFF' : '#022DA6',
+    // background: currentParticipants === maxParticipants ? '#FFFFFF' : '#022DA6',
+    background: currentParticipants >= maxParticipants ? '#FFFFFF' : isParticipating ? '#E24444' : '#022DA6',
     borderRadius: '10px',
     fontFamily: 'Jalnan, sans-serif',
     fontSize: '12px',
@@ -275,11 +285,16 @@ function DetailModal({
           onClick={handleJoinClick}
           disabled={currentParticipants >= maxParticipants}
         >
-          {currentParticipants >= maxParticipants
-            ? '마감됨'
-            : isParticipating
-            ? '참여취소'
-            : '참여하기'}
+            {/* {currentParticipants >= maxParticipants
+              ? '마감됨'
+              : isParticipating
+              ? '참여취소'
+              : '참여하기'} */}
+
+            {/* 1. 마감된 경우(post.isEnd == true): 마감됨
+            2. 마감되지 않음(post.isEnd == false), 내가 포함됨: 참여취소
+            3. 마감되지 않음(post.isEnd == false), 내가 포함되지 않음: 참여하기 */}
+            {currentParticipants >= maxParticipants ? '마감됨' : isParticipating ? '참여취소' : '참여하기'}
         </button>
         <p style={participantsStyle}>
           현재 참여 인원:{' '}
