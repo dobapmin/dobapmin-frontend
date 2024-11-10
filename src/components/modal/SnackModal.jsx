@@ -129,6 +129,13 @@ function SnackModal({
         const data = await res.data;
         console.log('뽑기 누름', data);
         setWinner(data.gameBoard.winner);
+        setIsDrawn(true);
+        setPost((prevPost) => ({
+          ...prevPost,
+          isEnd: true,
+          winner: data.gameBoard.winner,
+        }));
+        console.log(data.message);
       } catch (err) {
         console.log('err', err);
       }
