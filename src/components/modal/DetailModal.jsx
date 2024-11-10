@@ -171,8 +171,8 @@ function DetailModal({ postId, show, onHide }) {
   };
 
   const contentStyle = {
-    minHeight: '200px', // 최소 높이 설정
-    maxHeight: '200px',
+    minHeight: '180px', // 최소 높이 설정
+    maxHeight: '180px',
     overflowY: 'auto',
     fontFamily: 'Noto Sans KR, sans-serif',
     fontSize: '14px',
@@ -213,13 +213,15 @@ function DetailModal({ postId, show, onHide }) {
 
   const tagContainerStyle = {
     display: 'flex',
-    justifyContent: 'center',
-    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
+    flexWrap: 'nowrap', 
     gap: '10px',
     marginTop: '10px',
+    overflowX: 'auto', 
   };
 
   const tagStyle = {
+    display: 'inline-block', 
     padding: '2px 13px',
     background: '#FFFFFF',
     border: '1.5px solid #022DA6',
@@ -227,6 +229,8 @@ function DetailModal({ postId, show, onHide }) {
     fontFamily: 'Jalnan, sans-serif',
     fontSize: '12px',
     color: '#000000',
+    textAlign: 'center',
+    whiteSpace: 'nowrap', 
   };
 
   return (

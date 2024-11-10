@@ -145,8 +145,8 @@ function SnackModal({ postId, show, onHide }) {
   };
 
   const contentStyle = {
-    minHeight: '200px',
-    maxHeight: '200px',
+    minHeight: '180px',
+    maxHeight: '180px',
     overflowY: 'auto',
     fontFamily: 'Noto Sans KR, sans-serif',
     fontSize: isDrawn ? '30px' : '14px',
@@ -201,16 +201,18 @@ function SnackModal({ postId, show, onHide }) {
     color: '#000000',
     margin: '20px 0',
   };
-
+  
   const tagContainerStyle = {
     display: 'flex',
-    justifyContent: 'center',
-    flexWrap: 'wrap',
+    justifyContent: 'flex-start',
+    flexWrap: 'nowrap', 
     gap: '10px',
     marginTop: '10px',
+    overflowX: 'auto', 
   };
 
   const tagStyle = {
+    display: 'inline-block', 
     padding: '2px 13px',
     background: '#FFFFFF',
     border: '1.5px solid #022DA6',
@@ -218,7 +220,10 @@ function SnackModal({ postId, show, onHide }) {
     fontFamily: 'Jalnan, sans-serif',
     fontSize: '12px',
     color: '#000000',
+    textAlign: 'center',
+    whiteSpace: 'nowrap', 
   };
+  
 
   return (
     <div style={modalOverlayStyle} onClick={onHide}>
