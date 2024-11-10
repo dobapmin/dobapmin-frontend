@@ -171,8 +171,8 @@ function DetailModal({ postId, show, onHide }) {
   };
 
   const contentStyle = {
-    minHeight: '200px', // 최소 높이 설정
-    maxHeight: '200px',
+    minHeight: '180px', // 최소 높이 설정
+    maxHeight: '180px',
     overflowY: 'auto',
     fontFamily: 'Noto Sans KR, sans-serif',
     fontSize: '14px',
@@ -211,13 +211,24 @@ function DetailModal({ postId, show, onHide }) {
     marginBottom: '10px',
   };
 
+  // const tagContainerStyle = {
+  //   display: 'flex',
+  //   justifyContent: 'center',
+  //   flexWrap: 'wrap',
+  //   gap: '10px',
+  //   marginTop: '10px',
+  // };
+
   const tagContainerStyle = {
     display: 'flex',
     justifyContent: 'center',
-    flexWrap: 'wrap',
+    flexWrap: 'nowrap', // 가로로 스크롤할 때 flexWrap을 nowrap으로 설정
     gap: '10px',
     marginTop: '10px',
+    overflowX: 'auto', // 가로 스크롤 추가
+    padding: '10px 0', // 스크롤 바가 잘 보이도록 패딩 추가
   };
+  
 
   const tagStyle = {
     padding: '2px 13px',
