@@ -4,9 +4,14 @@ import './index.css';
 import { useLogin } from '../../lib/hooks/useLogin';
 import CanvasConfetti from './confetti/CanvasConfetti';
 
-function SnackModal({ postId, show, onHide }) {
+function SnackModal({
+  postId,
+  show,
+  onHide,
+  isParticipating,
+  setIsParticipating,
+}) {
   const [post, setPost] = useState(null);
-  const [isParticipating, setIsParticipating] = useState(false);
   const [currentParticipants, setCurrentParticipants] = useState(0);
   const [winner, setWinner] = useState(''); // 당첨자 상태 추가
   const [isDrawn, setIsDrawn] = useState(false); // 뽑기 완료 상태 추가
@@ -27,7 +32,7 @@ function SnackModal({ postId, show, onHide }) {
         })
         .catch((error) => console.error('Error fetching data:', error));
     }
-  }, [postId]);
+  }, [postId, isParticipating]);
 
   if (!show || !post) return null;
 
@@ -201,18 +206,18 @@ function SnackModal({ postId, show, onHide }) {
     color: '#000000',
     margin: '20px 0',
   };
-  
+
   const tagContainerStyle = {
     display: 'flex',
     justifyContent: 'flex-start',
-    flexWrap: 'nowrap', 
+    flexWrap: 'nowrap',
     gap: '10px',
     marginTop: '10px',
-    overflowX: 'auto', 
+    overflowX: 'auto',
   };
 
   const tagStyle = {
-    display: 'inline-block', 
+    display: 'inline-block',
     padding: '2px 13px',
     background: '#FFFFFF',
     border: '1.5px solid #022DA6',
@@ -221,9 +226,8 @@ function SnackModal({ postId, show, onHide }) {
     fontSize: '12px',
     color: '#000000',
     textAlign: 'center',
-    whiteSpace: 'nowrap', 
+    whiteSpace: 'nowrap',
   };
-  
 
   return (
     <div style={modalOverlayStyle} onClick={onHide}>

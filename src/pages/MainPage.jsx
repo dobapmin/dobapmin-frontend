@@ -103,6 +103,8 @@ export default function MainPage() {
           postId={selectedPostId}
           show={isSnackModalOpen}
           onHide={handleCloseModal}
+          isParticipating={isParticipating}
+          setIsParticipating={setIsParticipating}
         />
       )}
     </div>
