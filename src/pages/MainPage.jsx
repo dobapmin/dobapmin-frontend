@@ -14,6 +14,7 @@ export default function MainPage() {
   const [selectedPostId, setSelectedPostId] = useState(null);
   const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
   const [isSnackModalOpen, setIsSnackModalOpen] = useState(false);
+  const [isParticipating, setIsParticipating] = useState(false);
   const { loggedIn } = useLogin();
 
   useEffect(() => {
@@ -35,11 +36,12 @@ export default function MainPage() {
       );
       setEndList([...endedBoards, ...endedGameBoards]);
     });
-  }, [loggedIn]);
+  }, [loggedIn, isParticipating]);
 
   const handlePostClick = (post) => {
     setSelectedPostId(post._id);
-    if (post.hasOwnProperty('winner')) { // 바뀐 부분: winner 속성을 기준으로 SnackModal 열기
+    if (post.hasOwnProperty('winner')) {
+      // 바뀐 부분: winner 속성을 기준으로 SnackModal 열기
       setIsSnackModalOpen(true);
     } else {
       setIsDetailModalOpen(true);
@@ -90,6 +92,8 @@ export default function MainPage() {
           postId={selectedPostId}
           show={isDetailModalOpen}
           onHide={handleCloseModal}
+          isParticipating={isParticipating}
+          setIsParticipating={setIsParticipating}
         />
       )}
 
