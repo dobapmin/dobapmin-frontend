@@ -120,7 +120,7 @@ function DetailModal({
     height: '90%',
     maxWidth: '500px',
     background: '#FFFFFF',
-    border: '3px solid #000000',
+    // border: '3px solid #000000',
     borderRadius: '15px',
     boxSizing: 'border-box',
     padding: '20px',

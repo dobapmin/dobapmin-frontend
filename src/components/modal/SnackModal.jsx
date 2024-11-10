@@ -126,7 +126,7 @@ function SnackModal({
       try {
         const res = await axios.post(
           `http://localhost:3000/api/gameBoard/select/${postId}`,
-          { name: loggedIn.name }, 
+          { name: loggedIn.name },
           {
             withCredentials: true,
           }
@@ -144,7 +144,7 @@ function SnackModal({
       } catch (err) {
         // 바뀐부분: 403 오류 처리 - 작성자가 아닐 때 경고 메시지 표시
         if (err.response && err.response.status === 403) {
-          alert("뽑기 시작은 작성자만 할 수 있어요 😭");
+          alert('뽑기 시작은 작성자만 할 수 있어요 😭');
         } else {
           console.log('err', err);
         }
@@ -207,7 +207,7 @@ function SnackModal({
     height: '90%',
     maxWidth: '500px',
     background: '#FFFFFF',
-    border: '3px solid #000000',
+    //: '3px solid #000000',
     borderRadius: '15px',
     boxSizing: 'border-box',
     padding: '20px',
@@ -328,7 +328,7 @@ function SnackModal({
     ...buttonStyle,
     background: '#474747',
     cursor: 'not-allowed',
-    height: '25vh',
+    height: '30vh',
     width: '100%',
     border: 'none',
     borderRadius: '16px',
@@ -403,7 +403,9 @@ function SnackModal({
         <div style={contentStyle}>
           {isDrawn ? (
             <p style={winnerStyle}>
-              당첨자: {winner} <br></br> 🎉🎊🎉
+              🎉🎊🎉
+              <br></br>
+              당첨자: {winner}
             </p>
           ) : (
             <p>{post.content}</p>
@@ -440,13 +442,13 @@ function SnackModal({
               {maxParticipants}명
             </p>
             {/* {post.name === loggedIn.name ? ( */}
-              <button
-                style={buttonStyle}
-                onClick={handleDrawClick}
-                disabled={isDrawn}
-              >
-                뽑기 시작
-              </button>
+            <button
+              style={buttonStyle}
+              onClick={handleDrawClick}
+              disabled={isDrawn}
+            >
+              뽑기 시작
+            </button>
             {/* ) : null} */}
 
             <div style={tagContainerStyle}>
