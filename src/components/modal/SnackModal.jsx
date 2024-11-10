@@ -5,9 +5,14 @@ import axios from 'axios';
 import { useLogin } from '../../lib/hooks/useLogin';
 import CanvasConfetti from './confetti/CanvasConfetti';
 
-function SnackModal({ postId, show, onHide }) {
+function SnackModal({
+  postId,
+  show,
+  onHide,
+  isParticipating,
+  setIsParticipating,
+}) {
   const [post, setPost] = useState(null);
-  const [isParticipating, setIsParticipating] = useState(false);
   const [currentParticipants, setCurrentParticipants] = useState(0);
   const [winner, setWinner] = useState(''); // 당첨자 상태 추가
   const [isDrawn, setIsDrawn] = useState(false); // 뽑기 완료 상태 추가
@@ -27,10 +32,18 @@ function SnackModal({ postId, show, onHide }) {
           setCurrentParticipants(data.currentCount || 0);
           setWinner(data.winner || ''); // 기존에 당첨자가 있으면 표시
           setIsDrawn(data.winner || false); // 기존에 마감 상태면 표시
+
+          // 해당 글에 자신이 참여중인지 확인 후 반영
+          for (let i = 0; i < data.participate.length; i++) {
+            if (loggedIn.name === data.participate[i]) {
+              setIsParticipating(true);
+              break;
+            }
+          }
         })
         .catch((error) => console.error('Error fetching data:', error));
     }
-  }, [postId]);
+  }, [postId, isParticipating]);
 
   if (!show || !post) return null;
 
@@ -38,6 +51,7 @@ function SnackModal({ postId, show, onHide }) {
 
   const handleJoinClick = () => {
     if (isParticipating) {
+      if (post.name === loggedIn.name) return window.alert("글 작성자는 취소할 수 없습니다. 😭");
       setIsParticipating(false);
       setCurrentParticipants(currentParticipants - 1);
     } else if (currentParticipants < maxParticipants) {
@@ -190,6 +204,22 @@ function SnackModal({ postId, show, onHide }) {
     minWidth: '80px',
   };
 
+  const joinButtonStyle = {
+    display: 'block',
+    margin: '20px auto',
+    padding: '7px 15px',
+    // background: currentParticipants === maxParticipants ? '#FFFFFF' : '#022DA6',
+    background: currentParticipants >= maxParticipants ? '#FFFFFF' : isParticipating ? '#E24444' : '#022DA6',
+    borderRadius: '10px',
+    fontFamily: 'Jalnan, sans-serif',
+    fontSize: '12px',
+    color: currentParticipants === maxParticipants ? '#022DA6' : '#FFFFFF',
+    border:
+      currentParticipants === maxParticipants ? '1px solid #022DA6' : 'none',
+    cursor: currentParticipants === maxParticipants ? 'default' : 'pointer',
+    minWidth: '80px',
+  };
+
   const disabledButtonStyle = {
     ...buttonStyle,
     background: '#474747',
@@ -281,15 +311,21 @@ function SnackModal({ postId, show, onHide }) {
         {!isDrawn ? (
           <>
             <button
-              style={buttonStyle}
+              style={joinButtonStyle}
               onClick={handleJoinClick}
               disabled={currentParticipants >= maxParticipants}
             >
-              {currentParticipants >= maxParticipants
+              {/* {currentParticipants >= maxParticipants
                 ? '마감됨'
                 : isParticipating
                 ? '참여취소'
-                : '참여하기'}
+                : '참여하기'} */}
+
+              {/* 1. 마감된 경우(post.isEnd == true): 마감됨
+              2. 마감되지 않음(post.isEnd == false), 내가 포함됨: 참여취소
+              3. 마감되지 않음(post.isEnd == false), 내가 포함되지 않음: 참여하기 */}
+              {currentParticipants >= maxParticipants ? '마감됨' : isParticipating ? '참여취소' : '참여하기'}
+
             </button>
             <p style={participantsStyle}>
               현재 참여 인원:{' '}

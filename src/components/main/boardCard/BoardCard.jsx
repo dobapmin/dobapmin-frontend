@@ -97,7 +97,7 @@ export default function BoardCard({ data, onClick }) {
   };
 
   return (
-    <div className="dm-card-wrapper" onClick={data.isEnd ? null : onClick}>
+    <div className="dm-card-wrapper" onClick={onClick}>
       {/* 바뀐 부분: onClick 속성 추가 */}
       {data.isEnd ? <div className="dm-card-end">마감되었습니다.</div> : null}
       <div className="dm-card-img-bg" style={{ backgroundColor: CardColor }}>
