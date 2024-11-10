@@ -3,11 +3,16 @@ import profileImage from '../../assets/profileImage.png';
 import './index.css';
 import { useLogin } from '../../lib/hooks/useLogin';
 
-function DetailModal({ postId, show, onHide }) {
+function DetailModal({
+  postId,
+  show,
+  onHide,
+  isParticipating,
+  setIsParticipating,
+}) {
   const { loggedIn } = useLogin();
   console.log(loggedIn);
   const [post, setPost] = useState(null);
-  const [isParticipating, setIsParticipating] = useState(false);
   const [currentParticipants, setCurrentParticipants] = useState(0);
 
   // API 요청을 통해 데이터 불러오기
@@ -24,7 +29,7 @@ function DetailModal({ postId, show, onHide }) {
         })
         .catch((error) => console.error('Error fetching data:', error));
     }
-  }, [postId]);
+  }, [postId, isParticipating]);
 
   if (!show || !post) return null;
 
@@ -214,14 +219,14 @@ function DetailModal({ postId, show, onHide }) {
   const tagContainerStyle = {
     display: 'flex',
     justifyContent: 'flex-start',
-    flexWrap: 'nowrap', 
+    flexWrap: 'nowrap',
     gap: '10px',
     marginTop: '10px',
-    overflowX: 'auto', 
+    overflowX: 'auto',
   };
 
   const tagStyle = {
-    display: 'inline-block', 
+    display: 'inline-block',
     padding: '2px 13px',
     background: '#FFFFFF',
     border: '1.5px solid #022DA6',
@@ -230,7 +235,7 @@ function DetailModal({ postId, show, onHide }) {
     fontSize: '12px',
     color: '#000000',
     textAlign: 'center',
-    whiteSpace: 'nowrap', 
+    whiteSpace: 'nowrap',
   };
 
   return (
