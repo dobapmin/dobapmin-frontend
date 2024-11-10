@@ -117,7 +117,7 @@ function DetailModal({
   const modalStyle = {
     position: 'relative',
     width: '25%',
-    height: '80%',
+    height: '90%',
     maxWidth: '500px',
     background: '#FFFFFF',
     border: '3px solid #000000',
@@ -190,7 +190,7 @@ function DetailModal({
   };
 
   const contentStyle = {
-    minHeight: '180px', // 최소 높이 설정
+    minHeight: '180px',
     maxHeight: '180px',
     overflowY: 'auto',
     fontFamily: 'Noto Sans KR, sans-serif',
@@ -260,7 +260,7 @@ function DetailModal({
 
   return (
     <div style={modalOverlayStyle} onClick={onHide}>
-      <div className="modalStyle" onClick={(e) => e.stopPropagation()}>
+      <div style={modalStyle} onClick={(e) => e.stopPropagation()}>
         <button style={closeButtonStyle} onClick={onHide} aria-label="닫기">
           &times;
         </button>
