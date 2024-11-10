@@ -67,8 +67,8 @@ function SnackModal({
     //   setCurrentParticipants(currentParticipants + 1);
     // }
     if (isParticipating) {
-
-      if (post.name === loggedIn.name) return window.alert("글 작성자는 취소할 수 없습니다. 😭");
+      if (post.name === loggedIn.name)
+        return window.alert('글 작성자는 취소할 수 없습니다. 😭');
       // 참여 취소 요청
       fetch(`http://localhost:3000/api/gameBoard/party/${postId}`, {
         method: 'DELETE',
@@ -82,12 +82,18 @@ function SnackModal({
         .then((data) => {
           setIsParticipating(false);
           setCurrentParticipants(currentParticipants - 1);
+          setPost((prevPost) => ({
+            ...prevPost,
+            participate: prevPost.participate.filter(
+              (p) => p !== loggedIn.name
+            ),
+          }));
+
           console.log(data.message);
         })
         .catch((error) =>
           console.error('Error cancelling participation:', error)
         );
-
     } else if (currentParticipants < maxParticipants) {
       // 참여 요청
       fetch(`http://localhost:3000/api/gameBoard/party/${postId}`, {
@@ -102,6 +108,10 @@ function SnackModal({
         .then((data) => {
           setIsParticipating(true);
           setCurrentParticipants(currentParticipants + 1);
+          setPost((prevPost) => ({
+            ...prevPost,
+            participate: [...prevPost.participate, loggedIn.name],
+          }));
           console.log(data.message);
         })
         .catch((error) => console.error('Error joining:', error));
