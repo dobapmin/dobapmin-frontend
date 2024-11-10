@@ -11,7 +11,7 @@ function DetailModal({
   setIsParticipating,
 }) {
   const { loggedIn } = useLogin();
-  console.log(loggedIn);
+  // console.log(loggedIn);
   const [post, setPost] = useState(null);
   const [currentParticipants, setCurrentParticipants] = useState(0);
 
@@ -59,7 +59,7 @@ function DetailModal({
         .then((data) => {
           setIsParticipating(false);
           setCurrentParticipants(currentParticipants - 1);
-          console.log(data.message);
+          // console.log(data.message);
         })
         .catch((error) =>
           console.error('Error cancelling participation:', error)
@@ -78,7 +78,7 @@ function DetailModal({
         .then((data) => {
           setIsParticipating(true);
           setCurrentParticipants(currentParticipants + 1);
-          console.log(data.message);
+          // console.log(data.message);
         })
         .catch((error) => console.error('Error joining:', error));
     }

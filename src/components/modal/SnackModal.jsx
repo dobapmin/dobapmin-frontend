@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import profileImage from '../../assets/profileImage.png';
 import './index.css';
+import axios from 'axios';
 import { useLogin } from '../../lib/hooks/useLogin';
 import CanvasConfetti from './confetti/CanvasConfetti';
 
@@ -24,11 +25,13 @@ function SnackModal({
         credentials: 'include',
       })
         .then((res) => res.json())
+
         .then((data) => {
+          console.log('game board ------> ', data);
           setPost(data);
           setCurrentParticipants(data.currentCount || 0);
           setWinner(data.winner || ''); // 기존에 당첨자가 있으면 표시
-          setIsDrawn(data.isEnd || false); // 기존에 마감 상태면 표시
+          setIsDrawn(data.winner || false); // 기존에 마감 상태면 표시
 
           // 해당 글에 자신이 참여중인지 확인 후 반영
           for (let i = 0; i < data.participate.length; i++) {
@@ -57,12 +60,22 @@ function SnackModal({
     }
   };
 
-  const handleDrawClick = () => {
+  const handleDrawClick = async () => {
     if (!isDrawn && post.participate.length > 0) {
-      const randomWinner =
-        post.participate[Math.floor(Math.random() * post.participate.length)];
-      setWinner(randomWinner);
-      setIsDrawn(true);
+      //const randomWinner =
+      // post.participate[Math.floor(Math.random() * post.participate.length)];
+      try {
+        const res = await axios.post(
+          `http://localhost:3000/api/gameBoard/select/${postId}`
+        );
+        const data = await res.data;
+        console.log('뽑기 누름', data);
+        setWinner(data.gameBoard.winner);
+      } catch (err) {
+        console.log('err', err);
+      }
+      // setWinner(randomWinner);
+      // setIsDrawn(true);
     }
   };
 
@@ -185,7 +198,7 @@ function SnackModal({
     color: '#FFFFFF',
     fontFamily: 'Jalnan, sans-serif',
     fontSize: '12px',
-    border: '1.5px solid #022DA6',
+    border: 'none',
     borderRadius: '10px',
     cursor: 'pointer',
     minWidth: '80px',
@@ -211,9 +224,9 @@ function SnackModal({
     ...buttonStyle,
     background: '#474747',
     cursor: 'not-allowed',
-    height: '170px',
-    width: '310px',
-    border: '1.5px solid #474747',
+    height: '27%',
+    width: '95%',
+    border: 'none',
     borderRadius: '16px',
   };
 
