@@ -5,7 +5,7 @@ import { useLogin } from '../../lib/hooks/useLogin';
 
 function DetailModal({ postId, show, onHide }) {
   const { loggedIn } = useLogin();
-  console.log(loggedIn);
+  // console.log(loggedIn);
   const [post, setPost] = useState(null);
   const [isParticipating, setIsParticipating] = useState(false);
   const [currentParticipants, setCurrentParticipants] = useState(0);
@@ -45,7 +45,7 @@ function DetailModal({ postId, show, onHide }) {
         .then((data) => {
           setIsParticipating(false);
           setCurrentParticipants(currentParticipants - 1);
-          console.log(data.message);
+          // console.log(data.message);
         })
         .catch((error) =>
           console.error('Error cancelling participation:', error)
@@ -64,7 +64,7 @@ function DetailModal({ postId, show, onHide }) {
         .then((data) => {
           setIsParticipating(true);
           setCurrentParticipants(currentParticipants + 1);
-          console.log(data.message);
+          // console.log(data.message);
         })
         .catch((error) => console.error('Error joining:', error));
     }
@@ -214,14 +214,14 @@ function DetailModal({ postId, show, onHide }) {
   const tagContainerStyle = {
     display: 'flex',
     justifyContent: 'flex-start',
-    flexWrap: 'nowrap', 
+    flexWrap: 'nowrap',
     gap: '10px',
     marginTop: '10px',
-    overflowX: 'auto', 
+    overflowX: 'auto',
   };
 
   const tagStyle = {
-    display: 'inline-block', 
+    display: 'inline-block',
     padding: '2px 13px',
     background: '#FFFFFF',
     border: '1.5px solid #022DA6',
@@ -230,7 +230,7 @@ function DetailModal({ postId, show, onHide }) {
     fontSize: '12px',
     color: '#000000',
     textAlign: 'center',
-    whiteSpace: 'nowrap', 
+    whiteSpace: 'nowrap',
   };
 
   return (

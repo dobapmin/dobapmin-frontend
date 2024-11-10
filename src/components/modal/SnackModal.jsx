@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import profileImage from '../../assets/profileImage.png';
 import './index.css';
+import axios from 'axios';
 import { useLogin } from '../../lib/hooks/useLogin';
 import CanvasConfetti from './confetti/CanvasConfetti';
 
@@ -19,11 +20,13 @@ function SnackModal({ postId, show, onHide }) {
         credentials: 'include',
       })
         .then((res) => res.json())
+
         .then((data) => {
+          console.log('game board ------> ', data);
           setPost(data);
           setCurrentParticipants(data.currentCount || 0);
           setWinner(data.winner || ''); // 기존에 당첨자가 있으면 표시
-          setIsDrawn(data.isEnd || false); // 기존에 마감 상태면 표시
+          setIsDrawn(data.winner || false); // 기존에 마감 상태면 표시
         })
         .catch((error) => console.error('Error fetching data:', error));
     }
@@ -43,12 +46,22 @@ function SnackModal({ postId, show, onHide }) {
     }
   };
 
-  const handleDrawClick = () => {
+  const handleDrawClick = async () => {
     if (!isDrawn && post.participate.length > 0) {
-      const randomWinner =
-        post.participate[Math.floor(Math.random() * post.participate.length)];
-      setWinner(randomWinner);
-      setIsDrawn(true);
+      //const randomWinner =
+      // post.participate[Math.floor(Math.random() * post.participate.length)];
+      try {
+        const res = await axios.post(
+          `http://localhost:3000/api/gameBoard/select/${postId}`
+        );
+        const data = await res.data;
+        console.log('뽑기 누름', data);
+        setWinner(data.gameBoard.winner);
+      } catch (err) {
+        console.log('err', err);
+      }
+      // setWinner(randomWinner);
+      // setIsDrawn(true);
     }
   };
 
@@ -201,18 +214,18 @@ function SnackModal({ postId, show, onHide }) {
     color: '#000000',
     margin: '20px 0',
   };
-  
+
   const tagContainerStyle = {
     display: 'flex',
     justifyContent: 'flex-start',
-    flexWrap: 'nowrap', 
+    flexWrap: 'nowrap',
     gap: '10px',
     marginTop: '10px',
-    overflowX: 'auto', 
+    overflowX: 'auto',
   };
 
   const tagStyle = {
-    display: 'inline-block', 
+    display: 'inline-block',
     padding: '2px 13px',
     background: '#FFFFFF',
     border: '1.5px solid #022DA6',
@@ -221,9 +234,8 @@ function SnackModal({ postId, show, onHide }) {
     fontSize: '12px',
     color: '#000000',
     textAlign: 'center',
-    whiteSpace: 'nowrap', 
+    whiteSpace: 'nowrap',
   };
-  
 
   return (
     <div style={modalOverlayStyle} onClick={onHide}>
