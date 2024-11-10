@@ -123,13 +123,15 @@ function SnackModal({
 
   const handleDrawClick = async () => {
     if (!isDrawn && post.participate.length > 0) {
-      //const randomWinner =
-      // post.participate[Math.floor(Math.random() * post.participate.length)];
       try {
         const res = await axios.post(
-          `http://localhost:3000/api/gameBoard/select/${postId}`
+          `http://localhost:3000/api/gameBoard/select/${postId}`,
+          { name: loggedIn.name }, 
+          {
+            withCredentials: true,
+          }
         );
-        const data = await res.data;
+        const data = res.data;
         console.log('뽑기 누름', data);
         setWinner(data.gameBoard.winner);
         setIsDrawn(true);
@@ -140,12 +142,41 @@ function SnackModal({
         }));
         console.log(data.message);
       } catch (err) {
-        console.log('err', err);
+        // 바뀐부분: 403 오류 처리 - 작성자가 아닐 때 경고 메시지 표시
+        if (err.response && err.response.status === 403) {
+          alert("뽑기 시작은 작성자만 할 수 있어요 😭");
+        } else {
+          console.log('err', err);
+        }
       }
-      // setWinner(randomWinner);
-      // setIsDrawn(true);
     }
   };
+
+  // const handleDrawClick = async () => {
+  //   if (!isDrawn && post.participate.length > 0) {
+  //     try {
+  //       const res = await axios.post(
+  //         `http://localhost:3000/api/gameBoard/select/${postId}`,
+  //         { name: loggedIn.name }, // 바뀐부분: 요청 본문에 name 값 추가
+  //         {
+  //           withCredentials: true, // 바뀐부분: withCredentials 설정 추가
+  //         }
+  //       );
+  //       const data = res.data;
+  //       console.log('뽑기 누름', data);
+  //       setWinner(data.gameBoard.winner);
+  //       setIsDrawn(true);
+  //       setPost((prevPost) => ({
+  //         ...prevPost,
+  //         isEnd: true,
+  //         winner: data.gameBoard.winner,
+  //       }));
+  //       console.log(data.message);
+  //     } catch (err) {
+  //       console.log('err', err);
+  //     }
+  //   }
+  // };
 
   const formattedDate = post.createdAt
     ? post.createdAt.slice(2, 4) +
@@ -173,7 +204,7 @@ function SnackModal({
   const modalStyle = {
     position: 'relative',
     width: '25%',
-    height: '80%',
+    height: '90%',
     maxWidth: '500px',
     background: '#FFFFFF',
     border: '3px solid #000000',
@@ -240,8 +271,8 @@ function SnackModal({
   };
 
   const contentStyle = {
-    minHeight: '150px',
-    maxHeight: '150px',
+    minHeight: '180px',
+    maxHeight: '180px',
     overflowY: 'auto',
     fontFamily: 'Noto Sans KR, sans-serif',
     fontSize: isDrawn ? '30px' : '14px',
@@ -297,7 +328,7 @@ function SnackModal({
     ...buttonStyle,
     background: '#474747',
     cursor: 'not-allowed',
-    height: '33%',
+    height: '25vh',
     width: '100%',
     border: 'none',
     borderRadius: '16px',
@@ -348,7 +379,7 @@ function SnackModal({
         </>
       )}
 
-      <div className="modalStyle" onClick={(e) => e.stopPropagation()}>
+      <div style={modalStyle} onClick={(e) => e.stopPropagation()}>
         <button style={closeButtonStyle} onClick={onHide} aria-label="닫기">
           &times;
         </button>
@@ -408,7 +439,7 @@ function SnackModal({
               <span style={{ color: '#022DA6' }}>{currentParticipants}명</span>/
               {maxParticipants}명
             </p>
-            {post.name === loggedIn.name ? (
+            {/* {post.name === loggedIn.name ? ( */}
               <button
                 style={buttonStyle}
                 onClick={handleDrawClick}
@@ -416,7 +447,7 @@ function SnackModal({
               >
                 뽑기 시작
               </button>
-            ) : null}
+            {/* ) : null} */}
 
             <div style={tagContainerStyle}>
               {post.participate.map((participant) => (
