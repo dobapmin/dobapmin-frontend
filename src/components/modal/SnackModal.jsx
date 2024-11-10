@@ -184,7 +184,7 @@ function SnackModal({ postId, show, onHide }) {
     color: '#FFFFFF',
     fontFamily: 'Jalnan, sans-serif',
     fontSize: '12px',
-    border: '1.5px solid #022DA6',
+    border: 'none',
     borderRadius: '10px',
     cursor: 'pointer',
     minWidth: '80px',
@@ -194,9 +194,9 @@ function SnackModal({ postId, show, onHide }) {
     ...buttonStyle,
     background: '#474747',
     cursor: 'not-allowed',
-    height: '170px',
-    width: '310px',
-    border: '1.5px solid #474747',
+    height: '27%',
+    width: '95%',
+    border: 'none',
     borderRadius: '16px',
   };
 
