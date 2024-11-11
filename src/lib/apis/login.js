@@ -1,9 +1,12 @@
 import axios from 'axios';
 
+// const BASE_URL = process.env.BASE_URL;
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 export async function postLogout() {
   try {
     const res = await axios.post(
-      'http://localhost:3000/api/logout',
+      `${BASE_URL}/logout`,
       {
         headers: {
           'Content-Type': 'application/json',
@@ -19,7 +22,7 @@ export async function postLogout() {
 export const postLogin = async (nickname) => {
   try {
     const res = await axios.post(
-      'http://localhost:3000/api/login',
+      `${BASE_URL}/login`,
       {
         nickname: nickname,
         headers: {

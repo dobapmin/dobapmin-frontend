@@ -16,10 +16,14 @@ function DetailModal({
   const [currentParticipants, setCurrentParticipants] = useState(0);
   const [isParticipating, setIsParticipating] = useState(false);
 
+  // const BASE_URL = process.env.BASE_URL;
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
+
+
   // API 요청을 통해 데이터 불러오기
   useEffect(() => {
     if (postId) {
-      fetch(`http://localhost:3000/api/board/${postId}`, {
+      fetch(`${BASE_URL}/board/${postId}`, {
         method: 'GET',
         credentials: 'include',
       })
@@ -50,7 +54,7 @@ function DetailModal({
       if (post.name === loggedIn.name)
         return window.alert('글 작성자는 취소할 수 없습니다. 😭');
       // 참여 취소 요청
-      fetch(`http://localhost:3000/api/board/party/${postId}`, {
+      fetch(`${BASE_URL}/board/party/${postId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -70,7 +74,7 @@ function DetailModal({
         );
     } else if (currentParticipants < maxParticipants) {
       // 참여 요청
-      fetch(`http://localhost:3000/api/board/party/${postId}`, {
+      fetch(`${BASE_URL}/board/party/${postId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

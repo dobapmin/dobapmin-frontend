@@ -18,10 +18,15 @@ function SnackModal({
   const [isDrawn, setIsDrawn] = useState(false); // 뽑기 완료 상태 추가
   const { loggedIn } = useLogin();
   const [isParticipating, setIsParticipating] = useState(false);
+
+  // const BASE_URL = process.env.BASE_URL;
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
+
+
   // API 요청을 통해 데이터 불러오기
   useEffect(() => {
     if (postId) {
-      fetch(`http://localhost:3000/api/gameBoard/${postId}`, {
+      fetch(`${BASE_URL}/gameBoard/${postId}`, {
         method: 'GET',
         credentials: 'include',
       })
@@ -71,7 +76,7 @@ function SnackModal({
       if (post.name === loggedIn.name)
         return window.alert('글 작성자는 취소할 수 없습니다. 😭');
       // 참여 취소 요청
-      fetch(`http://localhost:3000/api/gameBoard/party/${postId}`, {
+      fetch(`${BASE_URL}/gameBoard/party/${postId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -98,7 +103,7 @@ function SnackModal({
         );
     } else if (currentParticipants < maxParticipants) {
       // 참여 요청
-      fetch(`http://localhost:3000/api/gameBoard/party/${postId}`, {
+      fetch(`${BASE_URL}/gameBoard/party/${postId}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -125,7 +130,7 @@ function SnackModal({
     if (!isDrawn && post.participate.length > 0) {
       try {
         const res = await axios.post(
-          `http://localhost:3000/api/gameBoard/select/${postId}`,
+          `${BASE_URL}/gameBoard/select/${postId}`,
           { name: loggedIn.name },
           {
             withCredentials: true,

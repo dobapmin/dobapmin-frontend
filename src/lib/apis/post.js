@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-const BASE_URL = '/api';
+// const BASE_URL = process.env.BASE_URL;
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+
 
 export const postBap = async (title, content, category, isAnonymous, totalCount) => {
   try {
@@ -16,7 +18,7 @@ export const postBap = async (title, content, category, isAnonymous, totalCount)
         {
         headers: {
           "Content-Type": "application/json",
-        }
+        }, withCredentials: true
       });
       console.log(response.status);
     return response.status;
@@ -36,7 +38,7 @@ export const postGame = async (title, content, totalCount) => {
         }, {
           headers: {
             "Content-Type": "application/json",
-          }
+          }, withCredentials: true
         });
       return response.status;
     } catch (e) {
